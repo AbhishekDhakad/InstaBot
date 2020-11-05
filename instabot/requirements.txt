@@ -1,4 +1,5 @@
-1. chrome webdriver
-2. Mysql Database
-3. selinium module
-4. PIL(pillow) module
+mysql-connector
+selenium
+requests
+urllib3
+pillow
