@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk,messagebox
 from PIL import Image,ImageTk
+from selenium import webdriver
 from instabot import bot
 import mysql.connector
 
@@ -154,7 +155,7 @@ def insta2():
 
 def insta3():
 	driver=webdriver.Chrome()
-	url="https://www.instagram.com/sufyan.gouri/"
+	url="https://www.instagram.com/sufyan_gouri/"
 	driver.get(url)
 
 def linkedin1():
