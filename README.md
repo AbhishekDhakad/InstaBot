@@ -27,6 +27,9 @@ and run this command >> "pip install -r requirements.txt"
 OR 
 cmd>"python -m pip install -r requirements.txt"
 
+#Run
+cmd>"python3 home_page.py"
+
 
 
 
