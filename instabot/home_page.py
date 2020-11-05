@@ -55,7 +55,7 @@ def verify_login():
 		messagebox.showerror("Error","All Field required",parent=screen3)
 	else:
 		try:
-			con=mysql.connector.connect(host="localhost",user="root",passwd="1234",database="instabot")
+			con=mysql.connector.connect(host="localhost",user="root",passwd="1234",database="abhi")
 			cur=con.cursor()
 			cur.execute("select * from login where username=%s and password=%s",(usr.get(),pwd.get()))
 			chk=cur.fetchone()
