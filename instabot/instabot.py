@@ -11,6 +11,7 @@ import msg
 import follow
 import datafile
 import webbrowser
+import os
 
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -25,7 +26,10 @@ def savedp():
 	screen2=Toplevel(screen1)
 	screen2.resizable(False,False)
 	screen2.title("InstaBot-Dpdownloader")
-	screen2.iconbitmap(r"images/icon.ico")
+	try:
+		screen2.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen2.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen2,bg="white",highlightthickness=3)
@@ -67,7 +71,7 @@ def verify_dp():
 
 def dpdownload():
 	vic=dpusr.get().split()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	for usr in vic:
 		k=details.dpdownload(driver,usr)
 		if(k!=1):
@@ -84,7 +88,10 @@ def savebio():
 	screen3=Toplevel(screen1)
 	screen3.resizable(False,False)
 	screen3.title("InstaBot-Bio Saver")
-	screen3.iconbitmap(r"images/icon.ico")
+	try:
+		screen3.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen3.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen3,bg="white",highlightthickness=3)
@@ -123,7 +130,7 @@ def verify_bio():
 
 def getbio():
 	vic=biousr.get().split()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	for usr in vic:
 		k=details.savebio(driver,usr)
 		if(k!=1):
@@ -140,7 +147,10 @@ def viewinfo():
 	screen4=Toplevel(screen1)
 	screen4.resizable(False,False)
 	screen4.title("InstaBot-Get Others Details")
-	screen4.iconbitmap(r"images/icon.ico")
+	try:
+		screen4.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen4.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen4,bg="white",highlightthickness=3)
@@ -189,7 +199,7 @@ def verify_info():
 
 def getinfo():
 	vic=viewusr.get().split()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	temp = ["Name      ","followers","following","posts     "]
 	for usr in vic:
 		viewlist.insert(END,"         "+str(usr)+"\n")
@@ -201,7 +211,7 @@ def getinfo():
 				viewlist.insert(END, j +"  -  "+ i +"\n")
 			viewlist.insert(END,"\n\n")
 	driver.minimize_window()
-	messagebox.showinfo("Success","Done",parent=screen4)
+	messagebox.showinfo("Success","text file saved",parent=screen4)
 
 def clear_info():
 	viewlist.delete(0,END)
@@ -215,7 +225,10 @@ def mssg():
 	screen5=Toplevel(screen1)
 	screen5.resizable(False,False)
 	screen5.title("InstaBot-Send Message")
-	screen5.iconbitmap(r"images/icon.ico")
+	try:
+		screen5.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen5.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen5,bg="white",highlightthickness=3)
@@ -256,7 +269,7 @@ def verify_msg():
 def msgsender():
 	message=msg1.get()
 	victim=usr1.get()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	k=msg.sendmsg(driver,victim,message)
 
 	if(k):
@@ -274,7 +287,10 @@ def bomb():
 	screen6=Toplevel(screen1)
 	screen6.resizable(False,False)
 	screen6.title("InstaBot-Send Message")
-	screen6.iconbitmap(r"images/icon.ico")
+	try:
+		screen6.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen6.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen6,bg="white",highlightthickness=3)
@@ -317,7 +333,7 @@ def msgbomber():
 	message=msg2.get()
 	victim=usr2.get()
 	num=int(num2.get())
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	
 	k=msg.blast(driver,victim,message,num)
 	if(k):
@@ -334,7 +350,10 @@ def sendreq():
 	screen7=Toplevel(screen1)
 	screen7.resizable(False,False)
 	screen7.title("InstaBot-Send Message")
-	screen7.iconbitmap(r"images/icon.ico")
+	try:
+		screen7.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen7.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen7,bg="white",highlightthickness=3)
@@ -373,7 +392,7 @@ def verify_req():
 
 def req():
 	victim=usr3.get().split()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	for vic in victim:
 		k=follow.followacc(driver,vic)
 		if(k!=1):
@@ -392,7 +411,10 @@ def getlist():
 	screen8=Toplevel(screen1)
 	screen8.resizable(False,False)
 	screen8.title("InstaBot-Get follower/unfollower")
-	screen8.iconbitmap(r"images/icon.ico")
+	try:
+		screen8.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen8.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen8,bg="white",highlightthickness=3)
@@ -438,7 +460,7 @@ def verify_localsave():
 
 def localsave():
 	page=page4.get()
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	k = follow.getdata(driver,username,page)
 
 	mylist.delete(0,"end")
@@ -459,7 +481,7 @@ def localsave():
 	
 def savelist():
 
-	txt_file = fd.asksaveasfile(title="Save text file",filetypes=[("text file","*.txt")],initialdir="\\instabot\\",mode='w')
+	txt_file = fd.asksaveasfile(title="Save text file",filetypes=[("text file","*.txt")],initialdir=os.getcwd(),mode='w')
 	stuff = mylist.get(0,END)
 	for line in stuff:
 		txt_file.write(line)
@@ -475,7 +497,10 @@ def unfollow():
 	screen9=Toplevel(screen1)
 	screen9.resizable(False,False)
 	screen9.title("InstaBot-Unfollow Users")
-	screen9.iconbitmap(r"images/icon.ico")
+	try:
+		screen9.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen9.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen9,bg="white",highlightthickness=3)
@@ -515,7 +540,7 @@ def unfollow():
 	screen9.mainloop()
 
 def open_file():
-	file = fd.askopenfile(title="Open text file",filetypes=[("text file","*.txt")],initialdir="\\instabot\\",mode='r',parent=frametxt)
+	file = fd.askopenfile(title="Open text file",filetypes=[("text file","*.txt")],initialdir=os.getcwd,mode='r',parent=frametxt)
 	stuff = file.readlines()
 	cnt = 0
 	for line in stuff:
@@ -532,7 +557,7 @@ def verify_unfollow():
 		unfollow_usr(lst)
 
 def unfollow_usr(lst):
-	driver.set_window_size(700,800)
+	driver.set_window_size(800,950)
 	follow.unfollowacc(driver,lst)
 	driver.minimize_window()
 	messagebox.showinfo("Success","You did't follow them now",parent=screen9)
@@ -543,7 +568,10 @@ def contactme():
 	screen10=Toplevel(screen1)
 	screen10.resizable(False,False)
 	screen10.title("InstaBot-Contact Me")
-	screen10.iconbitmap(r"images/icon.ico")
+	try:
+		screen10.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 	screen10.geometry(f"{w}x{h}+0+0")
 
 	framex=Frame(screen10,bg="white",highlightthickness=3)
@@ -611,7 +639,10 @@ def bot(browser,var1):
 	screen1=Tk()
 	screen1.resizable(False,False)
 	screen1.title("InstaBot: Main Page")
-	screen1.iconbitmap(r"images/icon.ico")
+	try:
+		screen1.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 
 	global w,h
 	w = screen1.winfo_screenwidth()

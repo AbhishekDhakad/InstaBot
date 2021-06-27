@@ -37,7 +37,10 @@ def login_page():
 	screen3=Tk()
 	screen3.resizable(False,False)
 	screen3.title("InstaBot-Login")
-	screen3.iconbitmap(r"images/icon.ico")
+	try:
+		screen3.iconbitmap(r"images/icon.ico")
+	except:
+		pass
 
 	w = screen3.winfo_screenwidth()
 	h = screen3.winfo_screenheight()
@@ -58,7 +61,7 @@ def login_page():
 	pwd=Entry(frame3,font=("times new roman",15),show="*",bg="lightgray")
 	pwd.place(x=741,y=410,width=390,height=35)
 
-	btn3=Button(frame3,text="Login",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_login).place(x=875,y=512,width=125,height=40)
+	Button(frame3,text="Login",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_login).place(x=875,y=512,width=125,height=40)
 	screen3.mainloop()
 
 	

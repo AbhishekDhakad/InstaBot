@@ -1,5 +1,6 @@
 from time import sleep
 from selenium import webdriver
+import os
 
 
 def takeinfo(driver,usr):
@@ -21,7 +22,13 @@ def takeinfo(driver,usr):
 		followers =txt2.split()[0]
 		following =txt3.split()[0]
 		posts     =txt4.split()[0]
-		path="\\instabot\\"+usr+"_info.txt"
+
+		try:
+			os.mkdir('User_Info')
+		except:
+			pass
+		cur = os.getcwd()
+		path = cur + "\\User_info\\" + usr + ".txt"
 		file=open(r"%s"%(path,),"w")
 		file.write("Name      ="+Name+"\n")
 		file.write("username  ="+usr+"\n")
