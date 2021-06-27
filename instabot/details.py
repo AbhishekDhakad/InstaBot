@@ -2,12 +2,12 @@ from selenium import webdriver
 from time import sleep
 import urllib.request
 
-def savebio(driver,victim,loc):
+def savebio(driver,usr):
     try:
-    	url='https://www.instagram.com/'+victim
+    	url='https://www.instagram.com/'+usr
     	driver.get(url)
     	txt=driver.find_element_by_xpath('//*[@class="-vDIg"]').text
-    	path=loc + victim + ".txt"
+    	path = "\\instabot\\"  + usr + ".txt"
     	bio=""
     	for e in txt:
     	    if(ord(e)<=128):
@@ -17,7 +17,6 @@ def savebio(driver,victim,loc):
     	file=open(r"%s"%(path,),"w")
     	file.write(bio)
     	file.close()
-    	driver.quit()
     	print("_____Bio saved SUCCESSFULLY_____")
     	print("At location --->>>"+path)
     	return 1
@@ -25,21 +24,25 @@ def savebio(driver,victim,loc):
     	print(es)
     	return 0
 
-def dpdownload(driver,victim,loc):
+def dpdownload(driver,usr):
 	try:
-		url='https://www.instagram.com/'+victim
+		url='https://www.instagram.com/'+usr
 		driver.get(url)
 		try:
 			image=driver.find_element_by_xpath('//img[@class="be6sR"]')
 		except:
-			image=driver.find_element_by_xpath('//img[@class="_6q-tv"]')
+			try:
+				image=driver.find_element_by_xpath('//img[@class="_6q-tv"]')
+			except:
+				return 0
 		img_link=image.get_attribute('src')
-		path=loc + victim + ".jpg"
+		path = "\\instabot\\"  + usr + ".jpg"
 		urllib.request.urlretrieve(img_link,path)
-		driver.quit()
-		print("__________Dp saved Successfully_________ \n\n ______at loc -->> : "+path)
+		print("Dp saved Successfully  at location: "+path)
 		return 1
+		
 	except Exception as es:
 		print(es)
 		return 0
+		
 	

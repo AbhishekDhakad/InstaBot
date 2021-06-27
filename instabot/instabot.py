@@ -1,48 +1,21 @@
 from time import sleep
-import urllib.request
-import itertools
 from tkinter import *
+from typing import Pattern
 from PIL import Image,ImageTk
 from tkinter import messagebox,ttk
+from tkinter import filedialog as fd
+import itertools
 import Login
 import details
 import msg
 import follow
 import datafile
+import webbrowser
 
-try:
-	from selenium import webdriver
-	from selenium.webdriver.support.ui import WebDriverWait
-	from selenium.webdriver.support import expected_conditions as EC
-	from selenium.webdriver.common.by import By 
-except:
-	print("Requirment not Satisfied")
-	choice=input("Do you want to install selenium(y/n): ")
-	if(choice.lower()=="y"):
-		os.system("python -m pip install selenium")
-	else:
-		print("Download necessary files, using command ( python -m pip install selenium )")
-	sleep(5)
-	quit()
-
-try:
-	import mysql.connector
-except:
-	print("mysql connection failed : try after using command pip install mysql.connector and setting up mysql database")
-
-def webd():
-	try:
-		driver=webdriver.Chrome()
-		return driver
-	except:
-		print('Download ChromeDriver, of same version as of Chrome and place the chromedriver.exe file in Same directory as of this file')
-		print('download from here: https://chromedriver.chromium.org/downloads')
-		sleep(10)
-		quit()
-
-def save_data(victim):
-	instalogin()
-	datafile.info_list(driver,username)
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By 
 
 
 ##################Dp###############
@@ -53,45 +26,55 @@ def savedp():
 	screen2.resizable(False,False)
 	screen2.title("InstaBot-Dpdownloader")
 	screen2.iconbitmap(r"images/icon.ico")
-	screen2.geometry("1350x700+25+100")
+	screen2.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen2,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/DP.jpg")
-	Label(screen2,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen2,bg="white",highlightthickness=3)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
+
+	frame1=Frame(framex,bg="white",highlightthickness=3)
 	frame1.config(highlightbackground="gray")
 	frame1.place(x=660,y=80,width=550,height=550)
 
-	title=Label(frame1,text="DP Download",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=120,y=20)
-
-	global txt1,txt2
 	
-	f_name=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
-	txt1=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
-	txt1.place(x=140,y=210,width=250,height=30)
+	global num1,dpusr
 
-	username=Label(frame1,text="Enter path, where you want to save:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=290)
-	txt2=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
-	txt2.place(x=140,y=350,width=250,height=30)
+	Label(frame1,text="DP Download",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
 
-	btn3=Button(screen2,text="Download",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_dp).place(x=860,y=530,width=125,height=40)
+	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
+	num1=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	num1['values']=("1","2","3","4","5","6","7","8","9","10")
+	num1.place(x=50,y=190,width=250,height=30)
+	num1.current(0)
+
+	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
+	dpusr=Entry(frame1,font=("times new roman",15),bg="lightblue")
+	dpusr.place(x=50,y=340,width=250,height=30)
+
+	Button(framex,text="Download",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_dp).place(x=1010,y=500,width=125,height=40)
+
 	screen2.mainloop()
 
 def verify_dp():
-	if txt1.get()=="" or txt2.get()=="":
+	if dpusr.get()=="" or num1.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen2)
 	else:
 		dpdownload()
 
 
 def dpdownload():
-	driver=webd()
-	victim=txt1.get()
-	path=txt2.get()
-	var=details.dpdownload(driver,victim,path)
-	if(var):
-		screen2.destroy()
-		messagebox.showinfo("Success","Dp Saved")
-	else:
-		messagebox.showerror("Error","Enter valid Username or Path")
+	vic=dpusr.get().split()
+	driver.set_window_size(700,800)
+	for usr in vic:
+		k=details.dpdownload(driver,usr)
+		if(k!=1):
+			print(usr," is invalid")
+	driver.minimize_window()
+	messagebox.showinfo("Success","Done")
+	screen2.destroy()
 
 
 ########bio###################
@@ -102,164 +85,187 @@ def savebio():
 	screen3.resizable(False,False)
 	screen3.title("InstaBot-Bio Saver")
 	screen3.iconbitmap(r"images/icon.ico")
-	screen3.geometry("1350x700+25+100")
+	screen3.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen3,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/Bio.jpg")
-	Label(screen3,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen3,bg="white",highlightthickness=3)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
+	frame1=Frame(framex,bg="white",highlightthickness=3)
 	frame1.config(highlightbackground="gray")
 	frame1.place(x=660,y=80,width=550,height=550)
 
-	title=Label(frame1,text="Bio Saver",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=120,y=20)
+	global biousr,bionum
 
-	global txt3,txt4
+	Label(frame1,text="Save Bio",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
 
-	f_name=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
-	txt3=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
-	txt3.place(x=140,y=210,width=250,height=30)
+	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
+	bionum=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	bionum['values']=("1","2","3","4","5","6","7","8","9","10")
+	bionum.place(x=50,y=190,width=250,height=30)
+	bionum.current(0)
 
-	loc=Label(frame1,text="Enter path, where you want to save:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=290)
-	txt4=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
-	txt4.place(x=140,y=350,width=250,height=30)
+	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
+	biousr=Entry(frame1,font=("times new roman",15),bg="lightblue")
+	biousr.place(x=50,y=340,width=250,height=30)
 
-	btn3=Button(screen3,text="Save",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_bio).place(x=860,y=530,width=125,height=40)
+	Button(framex,text="Save",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_bio).place(x=1010,y=500,width=125,height=40)
 
 	screen3.mainloop()
 
 def verify_bio():
-	if txt3.get()=="" or txt4.get()=="":
+	if biousr.get()=="" or bionum.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen3)
 	else:
 		getbio()
 
 def getbio():
-	driver=webd()
-	victim=txt3.get()
-	path=txt4.get()
-	var=details.savebio(driver,victim,path)
-	if(var):
-		screen3.destroy()
-		messagebox.showinfo("Success","Bio Saved")
-	else:
-		messagebox.showerror("Error","Enter valid username or Path")
+	vic=biousr.get().split()
+	driver.set_window_size(700,800)
+	for usr in vic:
+		k=details.savebio(driver,usr)
+		if(k!=1):
+			print(usr," is invalid")
+	driver.minimize_window()
+	messagebox.showinfo("Success","Done")
+	screen3.destroy()
 
 
 ####################Info##########
 
-def saveinfo():
+def viewinfo():
 	global screen4
 	screen4=Toplevel(screen1)
 	screen4.resizable(False,False)
 	screen4.title("InstaBot-Get Others Details")
 	screen4.iconbitmap(r"images/icon.ico")
-	screen4.geometry("1350x700+25+100")
+	screen4.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen4,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/info.jpg")
-	Label(screen4,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen4,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
 
-	title=Label(frame1,text="Save Someone's Info",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=90,y=20)
+	global frameview
 
-	global txt5,txt6
+	frameview=Frame(framex,bg="white",highlightthickness=3)
+	frameview.config(highlightbackground="gray")
+	frameview.place(x=660,y=80,width=550,height=550)
+
+	global viewusr
+
+	Label(frameview,text="View User",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=20)
 	
-	f_name=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
-	txt5=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
-	txt5.place(x=140,y=210,width=250,height=30)
+	Label(frameview,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=70,y=120)
 
-	username=Label(frame1,text="Enter path, where you want to save:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=290)
-	txt6=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
-	txt6.place(x=140,y=350,width=250,height=30)
+	viewusr=Entry(frameview,font=("times new roman",15),bg="lightblue")
+	viewusr.place(x=100,y=170,width=300,height=45)
 
-	global var_chk
-	var_chk=IntVar()
 
-	chk=Checkbutton(frame1,text="Want this to save on Database??",variable=var_chk,onvalue=1,offvalue=0,bg="white",fg="black",font=("times new roman",14)).place(x=50,y=400)
+	global viewlist
+	scroll = Scrollbar(frameview,orient=VERTICAL)
 
-	btn3=Button(screen4,text="Save",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_info).place(x=860,y=530,width=125,height=40)
+	viewlist = Listbox(frameview,bg="lightblue",yscrollcommand=scroll.set)
+	scroll.config(command=viewlist.yview)
+	viewlist.place(x=100,y=270,width=300,height=170)
+	scroll.place(x=395,y=270,width=20,height=170)
+
+	Button(frameview,text="Get",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_info).place(x=120,y=470,width=120,height=40)
+
+	Button(frameview,text="Clear",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=clear_info).place(x=250,y=470,width=120,height=40)
 
 	screen4.mainloop()
 
 
 def verify_info():
-	if txt5.get()=="" or txt6.get()=="":
+	if viewusr.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen4)
 	else:
 		getinfo()
 
 def getinfo():
-	driver=webd()
-	victim=txt5.get()
-	path=txt6.get()
-	choice=var_chk.get()
-	var=datafile.takeinfo(driver,victim,path,choice)
-	if(var):
-		screen4.destroy()
-		messagebox.showinfo("Success","Info Saved")
-	else:
-		messagebox.showerror("Error","Enter valid username or Path")
+	vic=viewusr.get().split()
+	driver.set_window_size(700,800)
+	temp = ["Name      ","followers","following","posts     "]
+	for usr in vic:
+		viewlist.insert(END,"         "+str(usr)+"\n")
+		k=datafile.takeinfo(driver,usr)
+		if(k==0):
+			print(usr," is invalid")
+		else:
+			for (i,j) in zip(k,temp):
+				viewlist.insert(END, j +"  -  "+ i +"\n")
+			viewlist.insert(END,"\n\n")
+	driver.minimize_window()
+	messagebox.showinfo("Success","Done",parent=screen4)
+
+def clear_info():
+	viewlist.delete(0,END)
+
 
 
 ################ message #############
+
 def mssg():
 	global screen5
 	screen5=Toplevel(screen1)
 	screen5.resizable(False,False)
 	screen5.title("InstaBot-Send Message")
 	screen5.iconbitmap(r"images/icon.ico")
-	screen5.geometry("1350x700+25+100")
+	screen5.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen5,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700) 
+
 	reg=ImageTk.PhotoImage(file="images/Messsage.jpg")
-	Label(screen5,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen5,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=560,y=80,width=700,height=550)
 
-	global usr1,password1,vic1,msg1
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
 
-	title=Label(frame1,text="Send Message",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
+	frame1=Frame(framex,bg="white")
+	# frame1.config(highlightbackground="gray")
+	frame1.place(x=660,y=80,width=550,height=550)
 
-	usr=Label(frame1,text="Insta Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=170)
-	usr1=Entry(frame1,font=("times new roman",15), bg="lightblue")
-	usr1.place(x=50,y=210,width=250,height=30)
+	title=Label(frame1,text="Send Message",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=120,y=20)
 
-	_name=Label(frame1,text="Insta Password:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=170)
-	password1=Entry(frame1,font=("times new roman",15),show="*",bg="lightblue")
-	password1.place(x=370,y=210,width=250,height=30)
+	global usr1,msg1
 
-	label=Label(frame1,text="Their Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	vic1=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	vic1.place(x=50,y=340,width=250,height=30)
+	label=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
+	usr1=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
+	usr1.place(x=140,y=210,width=250,height=30)
 
-	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=300)
-	msg1=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	msg1.place(x=370,y=340,width=250,height=30)
+	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=300)
+	msg1=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
+	msg1.place(x=140,y=350,width=250,height=30)
 
-	btn3=Button(screen5,text="Send",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_msg).place(x=820,y=530,width=125,height=40)
+	btn3=Button(framex,text="Send",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_msg).place(x=860,y=530,width=125,height=40)
+
 	screen5.mainloop()
 
 def verify_msg():
-	if usr1.get()=="" or password1.get()=="" or vic1.get()=="" or msg1.get()=="":
+	if usr1.get()=="" or msg1.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen5)
 	else:
 		msgsender()
 
 
 def msgsender():
-	username=usr1.get()
-	password=password1.get()
 	message=msg1.get()
-	victim=vic1.get()
-	driver=webd()
-	key=Login.loggin(driver, username, password)
-	if(key):
-		k=msg.sendmsg(driver,victim,message)
-		if(k):
-			screen5.destroy()
-			messagebox.showinfo("Success","Message sent")
-		else:
-			messagebox.showerror("Error","Invalid Username of Reciever",parent=screen5)
+	victim=usr1.get()
+	driver.set_window_size(700,800)
+	k=msg.sendmsg(driver,victim,message)
+
+	if(k):
+		screen5.destroy()
+		messagebox.showinfo("Success","Message sent")
+
 	else:
-		driver.quit()
-		messagebox.showerror("Error","Invalid Username & Password",parent=screen5)
+		messagebox.showerror("Error","Invalid Username of Reciever",parent=screen5)
+	
 
 ################# bomber##########################
 
@@ -269,64 +275,56 @@ def bomb():
 	screen6.resizable(False,False)
 	screen6.title("InstaBot-Send Message")
 	screen6.iconbitmap(r"images/icon.ico")
-	screen6.geometry("1350x700+25+100")
-	reg=ImageTk.PhotoImage(file="images/Bomber.jpg")
-	Label(screen6,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen6,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=560,y=80,width=700,height=550)
+	screen6.geometry(f"{w}x{h}+0+0")
 
-	global usr2,password2,vic2,msg2,num2
+	framex=Frame(screen6,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
+	reg=ImageTk.PhotoImage(file="images/Bomber.jpg")
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
+
+	frame1=Frame(framex,bg="white",highlightthickness=3)
+	frame1.config(highlightbackground="gray")
+	frame1.place(x=660,y=80,width=550,height=550)
+
+	global usr2,msg2,num2
 
 	title=Label(frame1,text="Message Bomber",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
 
-	usr=Label(frame1,text="Insta Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=170)
-	usr2=Entry(frame1,font=("times new roman",15), bg="lightblue")
-	usr2.place(x=50,y=210,width=250,height=30)
+	label=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=140)
+	usr2=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
+	usr2.place(x=140,y=190,width=250,height=30)
 
-	_name=Label(frame1,text="Insta Password:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=170)
-	password2=Entry(frame1,font=("times new roman",15),show="*",bg="lightblue")
-	password2.place(x=370,y=210,width=250,height=30)
+	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=250)
+	msg2=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
+	msg2.place(x=140,y=290,width=250,height=30)
 
-	label=Label(frame1,text="Their Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=270)
-	vic2=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	vic2.place(x=50,y=310,width=250,height=30)
-
-	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=270)
-	msg2=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	msg2.place(x=370,y=310,width=250,height=30)
-
-	numd=Label(frame1,text="How many?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=370)
+	numd=Label(frame1,text="How many?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=370)
 	num2=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	num2.place(x=50,y=410,width=250,height=30)
+	num2.place(x=140,y=410,width=80,height=30)
 
-	btn3=Button(screen6,text="Send",font=("calibri",16,"bold"),bg="red",cursor="hand2",command=verify_bomb).place(x=1000,y=520,width=125,height=40)
+	btn3=Button(framex,text="Send",font=("calibri",16,"bold"),bg="red",cursor="hand2",command=verify_bomb).place(x=1020,y=510,width=125,height=40)
 	screen6.mainloop()
 
 def verify_bomb():
-	if usr2.get()=="" or password2.get()=="" or vic2.get()=="" or msg2.get()=="" or num2.get()=="":
+	if usr2.get()=="" or msg2.get()=="" or num2.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen6)
 	else:
 		msgbomber()
 
 def msgbomber():
-	username=usr2.get()
-	password=password2.get()
 	message=msg2.get()
-	victim=vic2.get()
+	victim=usr2.get()
 	num=int(num2.get())
-	driver=webd()
-	key=Login.loggin(driver, username, password)
-	if(key):
-		k=msg.blast(driver,victim,message,num)
-		if(k):
-			screen6.destroy()
-			messagebox.showinfo("Success","Message sent")
-		else:
-			messagebox.showerror("Error","Invalid Username of Reciever",parent=screen6)
+	driver.set_window_size(700,800)
+	
+	k=msg.blast(driver,victim,message,num)
+	if(k):
+		screen6.destroy()
+		messagebox.showinfo("Success","Message sent")
 	else:
-		driver.quit()
-		messagebox.showerror("Error","Invalid Username & Password",parent=screen6)
+		messagebox.showerror("Error","Invalid Username of Reciever",parent=screen6)
 
 
 #################  send req ######################
@@ -337,60 +335,53 @@ def sendreq():
 	screen7.resizable(False,False)
 	screen7.title("InstaBot-Send Message")
 	screen7.iconbitmap(r"images/icon.ico")
-	screen7.geometry("1350x700+25+100")
+	screen7.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen7,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/Request.jpg")
-	Label(screen7,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen7,bg="white",highlightthickness=3)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
+
+	frame1=Frame(framex,bg="white",highlightthickness=3)
 	frame1.config(highlightbackground="gray")
-	frame1.place(x=560,y=80,width=700,height=550)
+	frame1.place(x=660,y=80,width=550,height=550)
 
-	global usr3,password3,vic3
+	global num3,usr3
 
-	title=Label(frame1,text="Follow Someone",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
+	Label(frame1,text="Follow People",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
 
-	usr=Label(frame1,text="Insta Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=170)
-	usr3=Entry(frame1,font=("times new roman",15), bg="lightblue")
-	usr3.place(x=50,y=210,width=250,height=30)
+	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
+	num3=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	num3['values']=("1","2","3","4","5","6","7","8","9","10")
+	num3.place(x=50,y=190,width=250,height=30)
+	num3.current(0)
 
-	_name=Label(frame1,text="Insta Password:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=170)
-	password3=Entry(frame1,font=("times new roman",15),show="*",bg="lightblue")
-	password3.place(x=370,y=210,width=250,height=30)
+	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
+	usr3=Entry(frame1,font=("times new roman",15),bg="lightblue")
+	usr3.place(x=50,y=340,width=250,height=30)
 
-	label=Label(frame1,text="Their Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	vic3=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	vic3.place(x=50,y=340,width=250,height=30)
-
-	btn3=Button(screen7,text="Send Req",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_req).place(x=1010,y=500,width=125,height=40)
+	Button(framex,text="Send Req",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_req).place(x=1010,y=500,width=125,height=40)
 	screen7.mainloop()
 
 def verify_req():
-	if usr3.get()=="" or password3.get()=="" or vic3.get()=="":
+	if usr3.get()=="" or num3.get()=="":
 		messagebox.showerror("Error","All Feild required",parent=screen6)
 	else:
 		req()
 
 def req():
-	username=usr3.get()
-	password=password3.get()
-	victim=vic3.get()
-	driver=webd()
-	key=Login.loggin(driver, username, password)
-	if(key):
-		k=follow.followacc(driver,victim)
-		if(k==1):
-			screen7.destroy()
-			messagebox.showinfo("Success","Account Followed")
-		elif(k==2):
-			screen7.destroy()
-			messagebox.showinfo("Account Private","Request send Successfully")
-		elif(k==3):
-			screen7.destroy()
-			messagebox.showerror("Error","Already Followed")
-		else:
-			messagebox.showerror("Error","Enter valid account to follow",parent=screen7)
-	else:
-		driver.quit()
-		messagebox.showerror("Error","Invalid Username & Password",parent=screen7)
+	victim=usr3.get().split()
+	driver.set_window_size(700,800)
+	for vic in victim:
+		k=follow.followacc(driver,vic)
+		if(k!=1):
+			print(k," is invalid")
+	driver.minimize_window()
+	screen7.destroy()
+	messagebox.showinfo("Success","Done")
+	
 
 
 ##################### follow/unfollow ##############
@@ -402,149 +393,257 @@ def getlist():
 	screen8.resizable(False,False)
 	screen8.title("InstaBot-Get follower/unfollower")
 	screen8.iconbitmap(r"images/icon.ico")
-	screen8.geometry("1350x700+25+100")
+	screen8.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen8,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/Follow.jpg")
-	Label(screen8,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen8,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=560,y=80,width=700,height=550)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
 
-	global usr4,password4,page4,path4
+	global framelist
 
-	title=Label(frame1,text="Follower/Unfollower",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
+	framelist=Frame(framex,bg="white",highlightthickness=3)
+	framelist.config(highlightbackground="gray")
+	framelist.place(x=660,y=80,width=550,height=550)
 
-	usr=Label(frame1,text="Insta Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=170)
-	usr4=Entry(frame1,font=("times new roman",15), bg="lightblue")
-	usr4.place(x=50,y=210,width=250,height=30)
+	global usr4,password4,page4
 
-	_name=Label(frame1,text="Insta Password:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=370,y=170)
-	password4=Entry(frame1,font=("times new roman",15),show="*",bg="lightblue")
-	password4.place(x=370,y=210,width=250,height=30)
+	Label(framelist,text="Follower/Unfollower",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=70,y=20)
 
-	label=Label(frame1,text="Which list you want ?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	page4=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	
+	Label(framelist,text="Which list you want ?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=120)
+	page4=ttk.Combobox(framelist,font=("times new roman",13),state="readonly",justify=CENTER)
 	page4['values']=("--select--","followers","following","unfollower")
-	page4.place(x=50,y=340,width=250,height=30)
+	page4.place(x=120,y=160,width=250,height=30)
 	page4.current(0)
 
-	msg=Label(frame1,text="Enter path, where you want to save:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=350,y=300)
-	path4=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	path4.place(x=370,y=340,width=250,height=30)
+	global mylist
+	scroll = Scrollbar(framelist,orient=VERTICAL)
 
-	btn3=Button(screen8,text="Get",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_localsave).place(x=820,y=530,width=125,height=40)
+	mylist = Listbox(framelist,bg="lightblue",yscrollcommand=scroll.set)
+	scroll.config(command=mylist.yview)
+	mylist.place(x=100,y=270,width=300,height=170)
+	scroll.place(x=395,y=270,width=20,height=170)
+
+	Button(framelist,text="Get",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_localsave).place(x=150,y=470,width=120,height=40)
 	screen8.mainloop()
 
 def verify_localsave():
-	if usr4.get()=="" or password4.get()=="" or page4.get()=="" or path4.get()=="":
-		messagebox.showerror("Error","All Feild required",parent=screen8)
+	if page4.get()=="--select--":
+		messagebox.showerror("Error","Select one",parent=screen8)
 	else:
 		localsave()
 
 def localsave():
-	username=usr4.get()
-	password=password4.get()
 	page=page4.get()
-	path=path4.get()
-	driver=webd()
-	key=Login.loggin(driver, username, password)
-	if(key):
-		k=follow.getdata(driver,username,page,path)
-		if(k):
-			screen8.destroy()
-			messagebox.showinfo("Success","List Saved")
-		else:
-			messagebox.showerror("Error","Error Occured",parent=screen8)
-	else:
-		driver.quit()
-		messagebox.showerror("Error","Invalid Username & Password",parent=screen8)
+	driver.set_window_size(700,800)
+	k = follow.getdata(driver,username,page)
 
+	mylist.delete(0,"end")
+	mylist.insert("end","        %s"%page.upper())
+	mylist.insert("end","\n")
 
-########################## upload list ################
+	c=0
+	for element in k:
+		c=c+1
+		mylist.insert("end",element)
 
-def uploadlist():
+	mylist.insert(1,"total  -   %s"%c)
+
+	messagebox.showinfo("Success","Done",parent=screen8)
+	btn = Button(framelist,text="save",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=savelist)
+	btn.place(x=275,y=470,width=125,height=40)
+	
+	
+def savelist():
+
+	txt_file = fd.asksaveasfile(title="Save text file",filetypes=[("text file","*.txt")],initialdir="\\instabot\\",mode='w')
+	stuff = mylist.get(0,END)
+	for line in stuff:
+		txt_file.write(line)
+		txt_file.write("\n")
+	txt_file.close()
+	messagebox.showinfo("Success","List saved",parent=screen8)
+	
+
+########################## unfollow list ################
+
+def unfollow():
 	global screen9
 	screen9=Toplevel(screen1)
 	screen9.resizable(False,False)
-	screen9.title("InstaBot-Upload connection list")
+	screen9.title("InstaBot-Unfollow Users")
 	screen9.iconbitmap(r"images/icon.ico")
-	screen9.geometry("1350x700+25+100")
+	screen9.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen9,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	reg=ImageTk.PhotoImage(file="images/upload.jpg")
-	Label(screen9,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen9,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
 
-	title=Label(frame1,text="Upload Data",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=120,y=20)
+	global frametxt
+	frametxt=Frame(framex,bg="white",highlightthickness=3)
+	frametxt.config(highlightbackground="gray")
+	frametxt.place(x=660,y=80,width=550,height=550)
 
-	global usr5,password5
+	Label(frametxt,text="Unfollow Users",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=100,y=20)
 
-	f_name=Label(frame1,text="Insta Username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
-	usr5=Entry(frame1,font=("times new roman",17), bg="lightblue")
-	usr5.place(x=140,y=210,width=250,height=30)
+	Label(frametxt,text="Open text file containing Username list",font=("times new roman",15),fg="black",bg="white").place(x=100,y=120)
 
-	loc=Label(frame1,text="Insta Password:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=290)
-	password5=Entry(frame1,font=("times new roman",17),bg="lightblue",show="*")
-	password5.place(x=140,y=350,width=250,height=30)
+	btn = Button(frametxt,text="Open File",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=open_file)
+	btn.place(x=200,y=150,width=125,height=40)
 
-	btn3=Button(screen9,text="Upload",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_upload).place(x=860,y=530,width=125,height=40)
+	Label(frametxt,text="- - - - OR - - - -",font=("times new roman",25,"bold"),fg="black",bg="white").place(x=160,y=200)
+
+	Label(frametxt,text="Write Usernames seprated by line",font=("times new roman",15),fg="black",bg="white").place(x=100,y=250)
+
+	global text_box
+
+	scroll = Scrollbar(frametxt,orient=VERTICAL)
+
+	text_box = Text(frametxt,bg="lightblue",yscrollcommand=scroll.set)
+	scroll.config(command=text_box.yview)
+	text_box.place(x=100,y=290,width=300,height=160)
+	scroll.place(x=395,y=290,width=20,height=160)
+
+	Button(frametxt,text="Unfollow",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_unfollow).place(x=200,y=470,width=125,height=40)
 
 	screen9.mainloop()
 
-def verify_upload():
-	if usr5.get()=="" or password5.get()=="":
+def open_file():
+	file = fd.askopenfile(title="Open text file",filetypes=[("text file","*.txt")],initialdir="\\instabot\\",mode='r',parent=frametxt)
+	stuff = file.readlines()
+	cnt = 0
+	for line in stuff:
+		cnt += 1
+		if(cnt > 4):
+			text_box.insert(END,line)
+	file.close()
+
+def verify_unfollow():
+	lst = text_box.get("1.0",END).splitlines()
+	if lst == "":
 		messagebox.showerror("Error","All Feild required",parent=screen9)
 	else:
-		upload()
+		unfollow_usr(lst)
 
-def upload():
-	username=usr5.get()
-	password=password5.get()
-	driver=webd()
-	key=Login.loggin(driver, username, password)
-	if(key):
-		k=datafile.info_list(driver,username)
-		if(k==1):
-			screen9.destroy()
-			messagebox.showinfo("Success","Data Uploaded")
-		else:
-			messagebox.showerror("Error","Error Occured",parent=screen9)
-	else:
-		driver.quit()
-		messagebox.showerror("Error","Invalid Username & Password",parent=screen9)
+def unfollow_usr(lst):
+	driver.set_window_size(700,800)
+	follow.unfollowacc(driver,lst)
+	driver.minimize_window()
+	messagebox.showinfo("Success","You did't follow them now",parent=screen9)
 
 
+def contactme():
+	global screen10
+	screen10=Toplevel(screen1)
+	screen10.resizable(False,False)
+	screen10.title("InstaBot-Contact Me")
+	screen10.iconbitmap(r"images/icon.ico")
+	screen10.geometry(f"{w}x{h}+0+0")
+
+	framex=Frame(screen10,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
+	reg=ImageTk.PhotoImage(file="images/About_us_page.jpg")
+	Label(framex,image=reg).place(relwidth=1,relheight=1)
+	frame1=Frame(framex,bg="white",highlightthickness=3)
+	frame1.config(highlightbackground="gray")
+	frame1.place(x=510,y=60,width=741,height=580)
+
+	
+
+	
+
+	k=ImageTk.PhotoImage(file="images/abhishek.jpg")
+	Label(frame1,image=k).place(x=260,y=10,width=197,height=197)
+	Label(frame1,text="Abhishek",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=180,y=220)
+	Label(frame1,text="Dhakad",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=350,y=220)
+
+	Label(frame1,text="I'm a second-year student \n pursuing Btech-CSE @LPU Punjab.",font=("Comic Sans MS",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=290)
+	Label(frame1,text="I'm a self-learner and highly passionate\nto learn new Skills and Technologies.",font=("Comic Sans MS",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=360)
+
+	Label(frame1,text="> Python Developer",font=("Comic sans MS",16,"bold"),fg="black",bg="white").place(x=10,y=290)
+	Label(frame1,text="> Web Developer",font=("Comic sans MS",16,"bold"),fg="black",bg="white").place(x=10,y=340)
+	Label(frame1,text="> Competitive Programmer",font=("Comic sans MS",16,"bold"),fg="black",bg="white",justify="left").place(x=10,y=390)
+
+	Label(frame1,text="Contact me on",font=("Comic sans MS",20,"bold"),fg="black",bg="white",justify="left").place(x=240,y=440)
+	
+	instalogo=ImageTk.PhotoImage(file="images/instagram.png")
+	maillogo=ImageTk.PhotoImage(file="images/mail.png")
+	linkedinlogo=ImageTk.PhotoImage(file="images/linkedin.png")
+	githublogo=ImageTk.PhotoImage(file="images/github.png")
+
+	Button(frame1,image=instalogo,cursor="hand2",command=insta,bd=0).place(x=180,y=500,width=40,height=40)
+	Button(frame1,image=maillogo,cursor="hand2",command=mail,bd=0).place(x=270,y=500,width=40,height=40)
+	Button(frame1,image=linkedinlogo,cursor="hand2",command=linkedin,bd=0).place(x=360,y=500,width=40,height=40)
+	Button(frame1,image=githublogo,cursor="hand2",command=github,bd=0).place(x=450,y=500,width=40,height=40)
+
+	screen10.mainloop()
+
+def insta():
+	url="https://www.instagram.com/abhishek.dhakad_/"
+	webbrowser.open(url)
+
+def mail():
+	url="mailto:abhishek.dhakad121@gmail.com"
+	webbrowser.open(url)
+
+def linkedin():
+	url="https://www.linkedin.com/in/abhishek-dhakad-003740192"
+	webbrowser.open(url)
+
+def github():
+	url = "https://github.com/AbhishekDhakad18"
+	webbrowser.open(url)
 
 
-def bot():
+def bot(browser,var1):
+	global driver,username
+	username = var1
+	driver = browser
 	global screen1
 	screen1=Tk()
 	screen1.resizable(False,False)
 	screen1.title("InstaBot: Main Page")
 	screen1.iconbitmap(r"images/icon.ico")
-	screen1.geometry("1350x700+25+100")
+
+	global w,h
+	w = screen1.winfo_screenwidth()
+	h = screen1.winfo_screenheight()
+	screen1.geometry(f"{w}x{h}+0+0")
+	framex=Frame(screen1,bg="white",highlightthickness=3)
+	framex.config(highlightbackground="gray")
+	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+
 	bg=ImageTk.PhotoImage(file="images/bg3.jpg")
-	bg1=Label(screen1,image=bg).place(relwidth=1,relheight=1)
-	frame1=Frame(screen1,bg="white",highlightthickness=2)
+	bg1=Label(framex,image=bg).place(relwidth=1,relheight=1)
+	frame1=Frame(framex,bg="white",highlightthickness=2)
 	frame1.config(highlightbackground="gray")
 	frame1.place(x=500,y=100,width=300,height=530)
 
 	Label(frame1, text = "Basic", fg = "black" ,font = ("bree serif",22,"bold"),bg="white").place(x=20,y=20,width=75,height=25)
 
-	temp=Button(screen1,text="DP",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savedp).place(x=580,y=230,width=125,height=40)
-	temp=Button(screen1,text="Bio",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savebio).place(x=580,y=390,width=125,height=40)
-	temp=Button(screen1,text="Info",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=saveinfo).place(x=580,y=550,width=125,height=40)
+	temp=Button(framex,text="DP",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savedp).place(x=580,y=230,width=125,height=40)
+	temp=Button(framex,text="Bio",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savebio).place(x=580,y=390,width=125,height=40)
+	temp=Button(framex,text="View",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=viewinfo).place(x=580,y=550,width=125,height=40)
 
-	frame2=Frame(screen1,bg="white",highlightthickness=2)
+	frame2=Frame(framex,bg="white",highlightthickness=2)
 	frame2.config(highlightbackground="gray")
 	frame2.place(x=850,y=100,width=450,height=530)
 
 	Label(frame2, text = "Advance", fg = "black" ,font = ("bree serif",22,"bold"),bg="white").place(x=20,y=20,width=150,height=25)
 
-	temp=Button(screen1,text="Message",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=mssg).place(x=1110,y=210,width=125,height=40)
-	temp=Button(screen1,text="Bomber",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=bomb).place(x=890,y=300,width=125,height=40)
-	temp=Button(screen1,text="send-req",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=sendreq).place(x=1110,y=390,width=125,height=40)
-	temp=Button(screen1,text="foll/unfoll",font=("calibri",14,"bold"),bg="violet",cursor="hand2",command=getlist).place(x=890,y=470,width=125,height=40)
-	temp=Button(screen1,text="upload",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=uploadlist).place(x=1110,y=550,width=125,height=40)
-	
+	temp=Button(framex,text="Message",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=mssg).place(x=1110,y=210,width=125,height=40)
+	temp=Button(framex,text="Bomber",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=bomb).place(x=890,y=300,width=125,height=40)
+	temp=Button(framex,text="send-req",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=sendreq).place(x=1110,y=390,width=125,height=40)
+	temp=Button(framex,text="followers",font=("calibri",14,"bold"),bg="violet",cursor="hand2",command=getlist).place(x=890,y=470,width=125,height=40)
+	temp=Button(framex,text="Unfollow",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=unfollow).place(x=1110,y=550,width=125,height=40)
+	temp=Button(framex,text="About Me",font=("calibri",16,"bold"),bg="navy",fg="yellow",cursor="hand2",command=contactme).place(x=1140,y=80,width=125,height=40)
 
 	screen1.mainloop()
