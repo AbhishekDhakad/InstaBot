@@ -589,28 +589,28 @@ def contactme():
 	
 
 	k=ImageTk.PhotoImage(file="images/abhishek.jpg")
-	Label(frame1,image=k).place(x=260,y=10,width=197,height=197)
-	Label(frame1,text="Abhishek",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=180,y=220)
-	Label(frame1,text="Dhakad",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=350,y=220)
+	Label(frame1,image=k).place(x=270,y=10,width=197,height=197)
+	Label(frame1,text="Abhishek",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=210,y=220)
+	Label(frame1,text="Dhakad",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=380,y=220)
 
-	Label(frame1,text="I'm a second-year student \n pursuing Btech-CSE @LPU Punjab.",font=("Comic Sans MS",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=290)
-	Label(frame1,text="I'm a self-learner and highly passionate\nto learn new Skills and Technologies.",font=("Comic Sans MS",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=360)
+	Label(frame1,text="I'm a second-year student \n pursuing Btech-CSE @LPU Punjab.",font=("Poppin",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=290)
+	Label(frame1,text="I'm a self-learner and highly passionate\nto learn new Skills and Technologies.",font=("Poppin",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=360)
 
-	Label(frame1,text="> Python Developer",font=("Comic sans MS",16,"bold"),fg="black",bg="white").place(x=10,y=290)
-	Label(frame1,text="> Web Developer",font=("Comic sans MS",16,"bold"),fg="black",bg="white").place(x=10,y=340)
-	Label(frame1,text="> Competitive Programmer",font=("Comic sans MS",16,"bold"),fg="black",bg="white",justify="left").place(x=10,y=390)
+	Label(frame1,text="> Python Developer",font=("Poppin",16,"bold"),fg="black",bg="white").place(x=10,y=290)
+	Label(frame1,text="> Web Developer",font=("Poppin",16,"bold"),fg="black",bg="white").place(x=10,y=340)
+	Label(frame1,text="> Competitive Programmer",font=("Poppins",16,"bold"),fg="black",bg="white",justify="left").place(x=10,y=390)
 
-	Label(frame1,text="Contact me on",font=("Comic sans MS",20,"bold"),fg="black",bg="white",justify="left").place(x=240,y=440)
+	Label(frame1,text="Connect to me on",font=("Santation",20,"bold"),fg="black",bg="white",justify="left").place(x=240,y=450)
 	
 	instalogo=ImageTk.PhotoImage(file="images/instagram.png")
 	maillogo=ImageTk.PhotoImage(file="images/mail.png")
 	linkedinlogo=ImageTk.PhotoImage(file="images/linkedin.png")
 	githublogo=ImageTk.PhotoImage(file="images/github.png")
 
-	Button(frame1,image=instalogo,cursor="hand2",command=insta,bd=0).place(x=180,y=500,width=40,height=40)
-	Button(frame1,image=maillogo,cursor="hand2",command=mail,bd=0).place(x=270,y=500,width=40,height=40)
-	Button(frame1,image=linkedinlogo,cursor="hand2",command=linkedin,bd=0).place(x=360,y=500,width=40,height=40)
-	Button(frame1,image=githublogo,cursor="hand2",command=github,bd=0).place(x=450,y=500,width=40,height=40)
+	Button(frame1,image=instalogo,cursor="hand2",command=insta,bd=0).place(x=200,y=500,width=40,height=40)
+	Button(frame1,image=maillogo,cursor="hand2",command=mail,bd=0).place(x=290,y=500,width=40,height=40)
+	Button(frame1,image=linkedinlogo,cursor="hand2",command=linkedin,bd=0).place(x=380,y=500,width=40,height=40)
+	Button(frame1,image=githublogo,cursor="hand2",command=github,bd=0).place(x=470,y=500,width=40,height=40)
 
 	screen10.mainloop()
 
@@ -648,33 +648,40 @@ def bot(browser,var1):
 	w = screen1.winfo_screenwidth()
 	h = screen1.winfo_screenheight()
 	screen1.geometry(f"{w}x{h}+0+0")
-	framex=Frame(screen1,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	screen1.configure(bg="#1b3b5f")
 
-	bg=ImageTk.PhotoImage(file="images/bg3.jpg")
-	bg1=Label(framex,image=bg).place(relwidth=1,relheight=1)
-	frame1=Frame(framex,bg="white",highlightthickness=2)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=500,y=100,width=300,height=530)
-
-	Label(frame1, text = "Basic", fg = "black" ,font = ("bree serif",22,"bold"),bg="white").place(x=20,y=20,width=75,height=25)
-
-	temp=Button(framex,text="DP",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savedp).place(x=580,y=230,width=125,height=40)
-	temp=Button(framex,text="Bio",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=savebio).place(x=580,y=390,width=125,height=40)
-	temp=Button(framex,text="View",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=viewinfo).place(x=580,y=550,width=125,height=40)
-
-	frame2=Frame(framex,bg="white",highlightthickness=2)
-	frame2.config(highlightbackground="gray")
-	frame2.place(x=850,y=100,width=450,height=530)
-
-	Label(frame2, text = "Advance", fg = "black" ,font = ("bree serif",22,"bold"),bg="white").place(x=20,y=20,width=150,height=25)
-
-	temp=Button(framex,text="Message",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=mssg).place(x=1110,y=210,width=125,height=40)
-	temp=Button(framex,text="Bomber",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=bomb).place(x=890,y=300,width=125,height=40)
-	temp=Button(framex,text="send-req",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=sendreq).place(x=1110,y=390,width=125,height=40)
-	temp=Button(framex,text="followers",font=("calibri",14,"bold"),bg="violet",cursor="hand2",command=getlist).place(x=890,y=470,width=125,height=40)
-	temp=Button(framex,text="Unfollow",font=("calibri",16,"bold"),bg="violet",cursor="hand2",command=unfollow).place(x=1110,y=550,width=125,height=40)
-	temp=Button(framex,text="About Me",font=("calibri",16,"bold"),bg="navy",fg="yellow",cursor="hand2",command=contactme).place(x=1140,y=80,width=125,height=40)
-
+	robot = ImageTk.PhotoImage(file="C:/Users/hp/Desktop/temporary/robot.png")
+	Label(screen1,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="C:/Users/hp/Desktop/temporary/copyright.png")
+	Label(screen1,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen1,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	
+	
+	Label(screen1,text="Hey, Instapy user \U0001F590",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-690,y=60)
+	Label(screen1,text="Click the buttons",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=140)
+	
+	
+	frame = Frame(screen1,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
+	
+	Label(frame,text="Simple functions",font=("calibri",20),bg="#455566",fg="#FFFFFF").place(x=30,y=30)
+	
+	Button(frame,text="Dp",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=savedp).place(x=40,y=110,width=150,height=50)
+	Button(frame,text="Bio",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=savebio).place(x=223,y=110,width=150,height=50)
+	Button(frame,text="View User",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=viewinfo).place(x=405,y=110,width=150,height=50)
+	
+	Label(frame,text="Advance functions",font=("calibri",20),bg="#455566",fg="#FFFFFF").place(x=30,y=220)
+	
+	Button(frame,text="Message",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=mssg).place(x=40,y=300,width=150,height=50)
+	Button(frame,text="Bomber",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=bomb).place(x=223,y=300,width=150,height=50)
+	Button(frame,text="Follow",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=sendreq).place(x=405,y=300,width=150,height=50)
+	
+	Button(frame,text="Unfollowers",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=getlist).place(x=100,y=390,width=180,height=50)
+	Button(frame,text="Unfollow",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=unfollow).place(x=320,y=390,width=170,height=50)
+	
+	Button(screen1,text="About Me",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=contactme).place(x=242,y=710,width=170,height=50)
+	
+	screen1.state('zoomed')
 	screen1.mainloop()
+

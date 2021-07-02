@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter as tk
 from tkinter import ttk,messagebox
 from PIL import Image,ImageTk
 from instabot import bot
@@ -33,64 +34,100 @@ def webd():
 
 
 def login_page():
-	global screen3
-	screen3=Tk()
-	screen3.resizable(False,False)
-	screen3.title("InstaBot-Login")
+	global root
+	root=Tk()
+	root.resizable(False,False)
+	root.title("InstaBot-Login")
 	try:
-		screen3.iconbitmap(r"images/icon.ico")
+		root.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 
-	w = screen3.winfo_screenwidth()
-	h = screen3.winfo_screenheight()
+	w = root.winfo_screenwidth()
+	h = root.winfo_screenheight()
 
-	screen3.geometry(f"{w}x{h}+0+0")
+	root.geometry(f"{w}x{h}+0+0")
+	root.configure(bg="#1b3b5f")
 
-	frame3=Frame(screen3,bg="white",highlightthickness=3)
-	frame3.config(highlightbackground="gray")
-	frame3.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(root,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
 
-	reg=ImageTk.PhotoImage(file="images/Login_Page.jpg")
-	reg1=Label(frame3,image=reg).place(relwidth=1,relheight=1)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(root,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(root,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+
+	Label(root,text="Welcome to Instapy",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-690,y=50)
+	Label(root,text="The Instabot",font=("Helvetica",30),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=125)
+
+	frame = Frame(root,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
+
+	user = ImageTk.PhotoImage(file="images/user.png")
+	Label(frame,image=user,bg="#455566").place(x=236,y=20,width=128,height=128)
 
 	global usr,pwd
-	usr=Entry(frame3,font=("times new roman",15),bg="lightgray")
-	usr.place(x=741,y=310,width=390,height=35)
 
-	pwd=Entry(frame3,font=("times new roman",15),show="*",bg="lightgray")
-	pwd.place(x=741,y=410,width=390,height=35)
+	usr = tk.Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF",highlightthickness=0,borderwidth=0,justify='center')
+	usr.insert(0,"Username")
 
-	Button(frame3,text="Login",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_login).place(x=875,y=512,width=125,height=40)
-	screen3.mainloop()
+	def clback(event):             #for erasing what we have in entry box
+		usr.delete(0,"end")
+		return None
 
-	
+	usr.bind("<Button-1>",clback)
+
+	usr.place(x=160,y=220,height=40,width=280)
+
+	usr1 = ImageTk.PhotoImage(file="images/1.png")
+	Label(frame,image=usr1,bg="#07254b").place(x=120,y=220,height=40,width=40)
+
+
+	pwd = tk.Entry(frame,font=("calibri",20),show="*",bg="#556080",fg="#FFFFFF",highlightthickness=0,borderwidth=0,justify='center')
+	pwd.insert(0,"********")
+
+	def cllback(event):
+		pwd.delete(0,"end")
+		return None
+
+	pwd.bind("<Button-1>",cllback)
+
+	pwd.place(x=160,y=290,height=40,width=280)
+
+	pwd1 = ImageTk.PhotoImage(file="images/2.png")
+	Label(frame,image=pwd1,bg="#07254b").place(x=120,y=290,height=40,width=40)
+
+
+	btn = ImageTk.PhotoImage(file="images/btnbtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_login).place(x=150,y=390,width=300,height=65)
+
+	root.state('zoomed')
+	root.mainloop()
 
 
 
 def verify_login():
-	if usr.get()=="" or pwd.get()=="":
-		messagebox.showerror("Error","All Field required",parent=screen3)
+	if usr.get()=="" or pwd.get()=="" or usr.get()=="Username" or pwd.get()=="********":
+		messagebox.showerror("Error","All Field required",parent=root)
 	else:
 		try:
 			global driver
 			driver = webd()
 			chk = Login.chk_login(driver,usr.get(),pwd.get())
 			if(chk):
-				messagebox.showinfo("Success","Welcome",parent=screen3)
+				messagebox.showinfo("Success","Welcome",parent=root)
 				activate_bot()
 			else:
-				messagebox.showerror("Error","Invalid Username & Password",parent=screen3)
+				messagebox.showerror("Error","Invalid Username & Password",parent=root)
 
 		except Exception as es:
-			messagebox.showerror("Error",f"Error Due to:{str(es)}",parent=screen3)
+			messagebox.showerror("Error",f"Error Due to:{str(es)}",parent=root)
 
 
 def activate_bot():
 	#if we destroy screen first then get function will not work
 	var1 = usr.get()
 
-	screen3.destroy()
+	root.destroy()
 	bot(driver,var1)
 
 login_page()
