@@ -1,6 +1,6 @@
-#  InstaPy
+<h1 align="center">InstaPy</h1>
+<h5 align="center">Instapy is an Instagram automated bot that has additional interesting and useful features.</h5><br/>
 
-Instapy is an Instagram automated bot that has additional interesting and useful features.
 
 ## 🎯 About
 I have started this project to learn how to structure a good-looking GUI in python and also to learn how to automate websites to do repetitive stuff on their own.\
