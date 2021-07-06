@@ -52,7 +52,7 @@ About me
 ```bash
   cd Instabot
 ```
----------Checkout Requirement section is first, given below------
+---------Checkout Requirement section first, given below------
 
 - Install dependencies
 
