@@ -34,7 +34,7 @@ def chk_login(driver,username,password):
 		driver.find_element_by_xpath('//button[@type="submit"]').click()
 		element=WebDriverWait(driver, 10).until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[1]/section/main/div/div/div/div/button')))
 		element.click()
-		sleep(5)
+		sleep(4)
 		driver.find_element_by_xpath('//button[text()="Not Now"]').click()
 		sleep(1)
 		driver.minimize_window()
