@@ -28,16 +28,16 @@ Go try it and please let me know if you enjoyed it with a ⭐️, I would apprec
 
 ## 📸 Screenshots
 Login using Instagram
-![Screenshot of InstaPy Log In](https://ik.imagekit.io/b2vii2qmxcx8/login_instapy_6m0_a1mDm.pngy)
+![Screenshot of InstaPy Log In](https://ik.imagekit.io/b2vii2qmxcx8/login_instapy_6m0_a1mDm.png)
 
 Main page
-![Screenshot of InstaPy main page](https://ik.imagekit.io/b2vii2qmxcx8/main_page_QtrbZYG9b.pngy)
+![Screenshot of InstaPy main page](https://ik.imagekit.io/b2vii2qmxcx8/main_page_QtrbZYG9b.png)
 
 Navbar
-![Screenshot of InstaPy Navbar](https://ik.imagekit.io/b2vii2qmxcx8/navbar_XXRHmz5Zl.pngy)
+![Screenshot of InstaPy Navbar](https://ik.imagekit.io/b2vii2qmxcx8/navbar_XXRHmz5Zl.png)
 
 About me
-![Screenshot of InstaPy About me page](https://ik.imagekit.io/b2vii2qmxcx8/about_me_plCy3h9sX.pngy)
+![Screenshot of InstaPy About me page](https://ik.imagekit.io/b2vii2qmxcx8/about_me_plCy3h9sX.png)
 
 
 ## 👨🏻‍💻 Run Locally
