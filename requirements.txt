@@ -1,0 +1,4 @@
+selenium
+requests
+urllib3
+pillow
