@@ -1,11 +1,11 @@
 from time import sleep
 from tkinter import *
+import tkinter as tk
 from typing import Pattern
 from PIL import Image,ImageTk
 from tkinter import messagebox,ttk
 from tkinter import filedialog as fd
 import itertools
-import Login
 import details
 import msg
 import follow
@@ -21,45 +21,51 @@ from selenium.webdriver.common.by import By
 
 ##################Dp###############
 
+btnstate = False
+
 def savedp():
 	global screen2
 	screen2=Toplevel(screen1)
 	screen2.resizable(False,False)
-	screen2.title("InstaBot-Dpdownloader")
+	screen2.title("InstaPy-Dpdownloader")
 	try:
 		screen2.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen2.geometry(f"{w}x{h}+0+0")
+	screen2.configure(bg="#1b3b5f")
 
-	framex=Frame(screen2,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen2,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen2,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen2,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen2,text="Download Profile picture",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-740,y=70)
+	Label(screen2,text="of multiple users",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=150)
 
-	reg=ImageTk.PhotoImage(file="images/DP.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-
-	frame1=Frame(framex,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	frame = Frame(screen2,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
 
 	
 	global num1,dpusr
 
-	Label(frame1,text="DP Download",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
 
-	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
-	num1=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	Label(frame,text="Number of persons?",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=30)
+	num1=ttk.Combobox(frame,font=("times new roman",18),state="readonly",justify=CENTER,background="#556080")
 	num1['values']=("1","2","3","4","5","6","7","8","9","10")
-	num1.place(x=50,y=190,width=250,height=30)
+	num1.place(x=150,y=100,width=300,height=30)
 	num1.current(0)
 
-	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	dpusr=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	dpusr.place(x=50,y=340,width=250,height=30)
+	Label(frame,text="Usernames (seprated by space):",font=("calibri",22),bg="#455566",fg="#FFFFFF").place(x=20,y=200)
 
-	Button(framex,text="Download",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_dp).place(x=1010,y=500,width=125,height=40)
+	dpusr=tk.Entry(frame,font=("times new roman",20),bg="#556080",fg="#FFFFFF")
+	dpusr.place(x=150,y=270,width=300,height=40)
 
+	btn = ImageTk.PhotoImage(file="images/downloadbtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_dp).place(x=150,y=400,width=300,height=70)
+
+	screen2.state('zoomed')
 	screen2.mainloop()
 
 def verify_dp():
@@ -71,7 +77,7 @@ def verify_dp():
 
 def dpdownload():
 	vic=dpusr.get().split()
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	for usr in vic:
 		k=details.dpdownload(driver,usr)
 		if(k!=1):
@@ -87,39 +93,44 @@ def savebio():
 	global screen3
 	screen3=Toplevel(screen1)
 	screen3.resizable(False,False)
-	screen3.title("InstaBot-Bio Saver")
+	screen3.title("InstaPy-Bio Saver")
 	try:
 		screen3.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen3.geometry(f"{w}x{h}+0+0")
+	screen3.configure(bg="#1b3b5f")
 
-	framex=Frame(screen3,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen3,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen3,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen3,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen3,text="Save Bio in text file",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-680,y=70)
+	Label(screen3,text="of multiple users",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=150)
 
-	reg=ImageTk.PhotoImage(file="images/Bio.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(framex,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	frame = Frame(screen3,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
+	
 
 	global biousr,bionum
 
-	Label(frame1,text="Save Bio",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
-
-	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
-	bionum=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	Label(frame,text="Number of persons?",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=30)
+	bionum=ttk.Combobox(frame,font=("times new roman",18),state="readonly",justify=CENTER,background="#556080")
 	bionum['values']=("1","2","3","4","5","6","7","8","9","10")
-	bionum.place(x=50,y=190,width=250,height=30)
+	bionum.place(x=150,y=100,width=300,height=30)
 	bionum.current(0)
 
-	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	biousr=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	biousr.place(x=50,y=340,width=250,height=30)
+	Label(frame,text="Usernames (seprated by space):",font=("calibri",22),bg="#455566",fg="#FFFFFF").place(x=20,y=200)
 
-	Button(framex,text="Save",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_bio).place(x=1010,y=500,width=125,height=40)
+	biousr=tk.Entry(frame,font=("times new roman",20),bg="#556080",fg="#FFFFFF")
+	biousr.place(x=150,y=270,width=300,height=40)
 
+	btn = ImageTk.PhotoImage(file="images/savebtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_bio).place(x=150,y=400,width=300,height=70)
+
+	screen3.state('zoomed')
 	screen3.mainloop()
 
 def verify_bio():
@@ -130,7 +141,7 @@ def verify_bio():
 
 def getbio():
 	vic=biousr.get().split()
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	for usr in vic:
 		k=details.savebio(driver,usr)
 		if(k!=1):
@@ -146,48 +157,54 @@ def viewinfo():
 	global screen4
 	screen4=Toplevel(screen1)
 	screen4.resizable(False,False)
-	screen4.title("InstaBot-Get Others Details")
+	screen4.title("InstaPy-Get Others Details")
 	try:
 		screen4.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen4.geometry(f"{w}x{h}+0+0")
+	screen4.configure(bg="#1b3b5f")
 
-	framex=Frame(screen4,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
-
-	reg=ImageTk.PhotoImage(file="images/info.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen4,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen4,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen4,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen4,text="Save User Info in text file",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-740,y=70)
+	Label(screen4,text="of multiple users",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-580,y=150)
+	
 
 	global frameview
 
-	frameview=Frame(framex,bg="white",highlightthickness=3)
-	frameview.config(highlightbackground="gray")
-	frameview.place(x=660,y=80,width=550,height=550)
+	frameview = Frame(screen4,bg="#455566")
+	frameview.place(x=w-750,y=240,width=600,height=500)
 
 	global viewusr
-
-	Label(frameview,text="View User",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=20)
 	
-	Label(frameview,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=70,y=120)
+	Label(frameview,text="Usernames (seprated by space):",font=("calibri",22),bg="#455566",fg="#FFFFFF").place(x=40,y=40)
 
-	viewusr=Entry(frameview,font=("times new roman",15),bg="lightblue")
-	viewusr.place(x=100,y=170,width=300,height=45)
+	viewusr=Entry(frameview,font=("times new roman",20),bg="#556080",fg="#FFFFFF")
+	viewusr.place(x=150,y=100,width=300,height=45)
+
+	Label(frameview,text="View result here:",font=("calibri",22),bg="#455566",fg="#FFFFFF").place(x=40,y=170)
 
 
 	global viewlist
 	scroll = Scrollbar(frameview,orient=VERTICAL)
 
-	viewlist = Listbox(frameview,bg="lightblue",yscrollcommand=scroll.set)
+	viewlist = Listbox(frameview,font=("times new roman",20),bg="#556080",fg="#FFFFFF",highlightthickness=0,borderwidth=0,yscrollcommand=scroll.set)
 	scroll.config(command=viewlist.yview)
-	viewlist.place(x=100,y=270,width=300,height=170)
-	scroll.place(x=395,y=270,width=20,height=170)
+	viewlist.place(x=150,y=230,width=300,height=170)
+	scroll.place(x=445,y=230,width=20,height=170)
 
-	Button(frameview,text="Get",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_info).place(x=120,y=470,width=120,height=40)
+	getbtn = ImageTk.PhotoImage(file="images/getbtn.png")
+	Button(frameview,image=getbtn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_info).place(x=160,y=420)
 
-	Button(frameview,text="Clear",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=clear_info).place(x=250,y=470,width=120,height=40)
+	clearbtn = ImageTk.PhotoImage(file="images/clearbtn.png")
+	Button(frameview,image=clearbtn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=clear_info).place(x=325,y=420)
 
+	screen4.state('zoomed')
 	screen4.mainloop()
 
 
@@ -199,7 +216,7 @@ def verify_info():
 
 def getinfo():
 	vic=viewusr.get().split()
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	temp = ["Name      ","followers","following","posts     "]
 	for usr in vic:
 		viewlist.insert(END,"         "+str(usr)+"\n")
@@ -224,39 +241,40 @@ def mssg():
 	global screen5
 	screen5=Toplevel(screen1)
 	screen5.resizable(False,False)
-	screen5.title("InstaBot-Send Message")
+	screen5.title("InstaPy-Send Message")
 	try:
 		screen5.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen5.geometry(f"{w}x{h}+0+0")
+	screen5.configure(bg="#1b3b5f")
 
-	framex=Frame(screen5,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700) 
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen5,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen5,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen5,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen5,text="Send Message",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-600,y=70)
+	Label(screen5,text="to multiple users",font=("Helvetica",20),bg="#1b3b5f",fg="#EDEDED").place(x=w-530,y=150)
 
-	reg=ImageTk.PhotoImage(file="images/Messsage.jpg")
-
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-
-	frame1=Frame(framex,bg="white")
-	# frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
-
-	title=Label(frame1,text="Send Message",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=120,y=20)
+	frame = Frame(screen5,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
 
 	global usr1,msg1
 
-	label=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=150)
-	usr1=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
-	usr1.place(x=140,y=210,width=250,height=30)
+	Label(frame,text="Usernames seprated by space: ",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=40)
+	usr1=Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF")
+	usr1.place(x=150,y=110,height=45,width=300)
 
-	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=300)
-	msg1=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
-	msg1.place(x=140,y=350,width=250,height=30)
+	Label(frame,text="Your Message: ",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=220)
+	msg1=Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF")
+	msg1.place(x=150,y=290,width=300,height=45)
 
-	btn3=Button(framex,text="Send",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_msg).place(x=860,y=530,width=125,height=40)
+	btn = ImageTk.PhotoImage(file="images/sendbtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_msg).place(x=150,y=400,width=300,height=70)
 
+	screen5.state('zoomed')
 	screen5.mainloop()
 
 def verify_msg():
@@ -268,16 +286,18 @@ def verify_msg():
 
 def msgsender():
 	message=msg1.get()
-	victim=usr1.get()
-	driver.set_window_size(800,950)
-	k=msg.sendmsg(driver,victim,message)
-
-	if(k):
-		screen5.destroy()
-		messagebox.showinfo("Success","Message sent")
-
-	else:
-		messagebox.showerror("Error","Invalid Username of Reciever",parent=screen5)
+	victim=usr1.get().split()
+	driver.set_window_size(800,820)
+	for vic in victim:
+		k=msg.sendmsg(driver,vic,message)
+		if(k):
+			screen5.destroy()
+			print("Success - Message sent")
+		else:
+			print("Error - Invalid Username of Reciever ",k)
+	driver.minimize_window()
+	screen5.destroy()
+	messagebox.showinfo("Success","Done")
 	
 
 ################# bomber##########################
@@ -286,41 +306,42 @@ def bomb():
 	global screen6
 	screen6=Toplevel(screen1)
 	screen6.resizable(False,False)
-	screen6.title("InstaBot-Send Message")
+	screen6.title("InstaPy-Send Message")
 	try:
 		screen6.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen6.geometry(f"{w}x{h}+0+0")
+	screen6.configure(bg="#1b3b5f")
 
-	framex=Frame(screen6,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen6,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen6,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen6,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen6,text="Send message to one user",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-750,y=70)
+	Label(screen6,text="with many repitition",font=("Helvetica",20),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=150)
 
-	reg=ImageTk.PhotoImage(file="images/Bomber.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-
-	frame1=Frame(framex,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	frame = Frame(screen6,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
 
 	global usr2,msg2,num2
 
-	title=Label(frame1,text="Message Bomber",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
+	Label(frame,text="Their Username: ",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=20)
+	usr2=Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF")
+	usr2.place(x=160,y=80,height=45,width=300)
 
-	label=Label(frame1,text="Enter their username:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=140)
-	usr2=Entry(frame1,font=("times new roman",17), bg="lightblue",cursor="hand2")
-	usr2.place(x=140,y=190,width=250,height=30)
+	Label(frame,text="Your Message: ",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=160)
+	msg2=Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF")
+	msg2.place(x=160,y=220,width=300,height=45)
 
-	msg=Label(frame1,text="Message:",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=250)
-	msg2=Entry(frame1,font=("times new roman",17),bg="lightblue",cursor="hand2")
-	msg2.place(x=140,y=290,width=250,height=30)
+	Label(frame,text="How many?: ",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=300)
+	num2=Entry(frame,font=("calibri",20),bg="#556080",fg="#FFFFFF")
+	num2.place(x=140,y=360,width=80,height=30)
 
-	numd=Label(frame1,text="How many?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=50,y=370)
-	num2=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	num2.place(x=140,y=410,width=80,height=30)
-
-	btn3=Button(framex,text="Send",font=("calibri",16,"bold"),bg="red",cursor="hand2",command=verify_bomb).place(x=1020,y=510,width=125,height=40)
+	btn = ImageTk.PhotoImage(file="images/sendbtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_bomb).place(x=260,y=400,width=300,height=70)
 	screen6.mainloop()
 
 def verify_bomb():
@@ -333,7 +354,7 @@ def msgbomber():
 	message=msg2.get()
 	victim=usr2.get()
 	num=int(num2.get())
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	
 	k=msg.blast(driver,victim,message,num)
 	if(k):
@@ -349,39 +370,43 @@ def sendreq():
 	global screen7
 	screen7=Toplevel(screen1)
 	screen7.resizable(False,False)
-	screen7.title("InstaBot-Send Message")
+	screen7.title("InstaPy-Send Message")
 	try:
 		screen7.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen7.geometry(f"{w}x{h}+0+0")
+	screen7.configure(bg="#1b3b5f")
 
-	framex=Frame(screen7,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen7,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen7,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen7,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen7,text="Send follow request",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-690,y=70)
+	Label(screen7,text="to multiple users",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=150)
 
-	reg=ImageTk.PhotoImage(file="images/Request.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-
-	frame1=Frame(framex,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=660,y=80,width=550,height=550)
+	frame = Frame(screen7,bg="#455566")
+	frame.place(x=w-750,y=240,width=600,height=500)
 
 	global num3,usr3
 
-	Label(frame1,text="Follow People",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=150,y=35)
-
-	Label(frame1,text="Number of Person?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=150)
-	num3=ttk.Combobox(frame1,font=("times new roman",13),state="readonly",justify=CENTER)
+	Label(frame,text="Number of persons?",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=30)
+	num3=ttk.Combobox(frame,font=("times new roman",18),state="readonly",justify=CENTER,background="#556080")
 	num3['values']=("1","2","3","4","5","6","7","8","9","10")
-	num3.place(x=50,y=190,width=250,height=30)
+	num3.place(x=150,y=100,width=300,height=30)
 	num3.current(0)
 
-	Label(frame1,text="Usernames (seprated by space):",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=300)
-	usr3=Entry(frame1,font=("times new roman",15),bg="lightblue")
-	usr3.place(x=50,y=340,width=250,height=30)
+	Label(frame,text="Usernames (seprated by space):",font=("calibri",22),bg="#455566",fg="#FFFFFF").place(x=20,y=200)
 
-	Button(framex,text="Send Req",font=("calibri",16,"bold"),bg="pink",cursor="hand2",command=verify_req).place(x=1010,y=500,width=125,height=40)
+	usr3=tk.Entry(frame,font=("times new roman",20),bg="#556080",fg="#FFFFFF")
+	usr3.place(x=150,y=270,width=300,height=40)
+
+	btn = ImageTk.PhotoImage(file="images/followbtn.png")
+	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_req).place(x=150,y=400,width=300,height=70)
+
+	screen7.state('zoomed')
 	screen7.mainloop()
 
 def verify_req():
@@ -392,7 +417,7 @@ def verify_req():
 
 def req():
 	victim=usr3.get().split()
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	for vic in victim:
 		k=follow.followacc(driver,vic)
 		if(k!=1):
@@ -410,46 +435,53 @@ def getlist():
 	global screen8
 	screen8=Toplevel(screen1)
 	screen8.resizable(False,False)
-	screen8.title("InstaBot-Get follower/unfollower")
+	screen8.title("InstaPy-Get follower/unfollower")
 	try:
 		screen8.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen8.geometry(f"{w}x{h}+0+0")
+	screen8.configure(bg="#1b3b5f")
 
-	framex=Frame(screen8,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
-
-	reg=ImageTk.PhotoImage(file="images/Follow.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen8,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen8,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen8,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen8,text="Follower-Following-Unfollower",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-810,y=70)
+	Label(screen8,text="in text file",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-510,y=150)
 
 	global framelist
 
-	framelist=Frame(framex,bg="white",highlightthickness=3)
-	framelist.config(highlightbackground="gray")
-	framelist.place(x=660,y=80,width=550,height=550)
+	framelist = Frame(screen8,bg="#455566")
+	framelist.place(x=w-750,y=240,width=600,height=500)
 
 	global usr4,password4,page4
-
-	Label(framelist,text="Follower/Unfollower",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=70,y=20)
-
 	
-	Label(framelist,text="Which list you want ?",font=("times new roman",15,"bold"),fg="black",bg="white").place(x=30,y=120)
-	page4=ttk.Combobox(framelist,font=("times new roman",13),state="readonly",justify=CENTER)
+	Label(framelist,text="Number of persons?",font=("calibri",24),bg="#455566",fg="#FFFFFF").place(x=20,y=20)
+	page4=ttk.Combobox(framelist,font=("times new roman",18),state="readonly",justify=CENTER,background="#556080")
 	page4['values']=("--select--","followers","following","unfollower")
-	page4.place(x=120,y=160,width=250,height=30)
+	page4.place(x=150,y=80,width=300,height=40)
 	page4.current(0)
 
 	global mylist
 	scroll = Scrollbar(framelist,orient=VERTICAL)
 
-	mylist = Listbox(framelist,bg="lightblue",yscrollcommand=scroll.set)
+	mylist = Listbox(framelist,bg="#556080",font=("calibri",14),fg="#FFFFFF",yscrollcommand=scroll.set,highlightthickness=0,borderwidth=0)
 	scroll.config(command=mylist.yview)
-	mylist.place(x=100,y=270,width=300,height=170)
-	scroll.place(x=395,y=270,width=20,height=170)
+	mylist.place(x=120,y=180,width=350,height=200)
+	scroll.place(x=465,y=180,width=20,height=200)
 
-	Button(framelist,text="Get",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_localsave).place(x=150,y=470,width=120,height=40)
+	btn1 = ImageTk.PhotoImage(file="images/getbtn.png")
+	Button(framelist,image=btn1,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_localsave).place(x=150,y=410)
+	
+	global btnx
+	btn2 = ImageTk.PhotoImage(file="images/save2btn.png")
+	btnx = Button(framelist,image=btn2,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=savelist,state=DISABLED)
+	btnx.place(x=320,y=410)
+
+	screen8.state('zoomed')
 	screen8.mainloop()
 
 def verify_localsave():
@@ -460,7 +492,7 @@ def verify_localsave():
 
 def localsave():
 	page=page4.get()
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	k = follow.getdata(driver,username,page)
 
 	mylist.delete(0,"end")
@@ -475,13 +507,14 @@ def localsave():
 	mylist.insert(1,"total  -   %s"%c)
 
 	messagebox.showinfo("Success","Done",parent=screen8)
-	btn = Button(framelist,text="save",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=savelist)
-	btn.place(x=275,y=470,width=125,height=40)
+
+	btnx["state"] = NORMAL
+	
 	
 	
 def savelist():
 
-	txt_file = fd.asksaveasfile(title="Save text file",filetypes=[("text file","*.txt")],initialdir=os.getcwd(),mode='w')
+	txt_file = fd.asksaveasfile(title="Save text file",filetypes=[("text file","*.txt")],defaultextension=[("text file","*.txt")],initialdir=os.getcwd(),mode='w')
 	stuff = mylist.get(0,END)
 	for line in stuff:
 		txt_file.write(line)
@@ -496,47 +529,50 @@ def unfollow():
 	global screen9
 	screen9=Toplevel(screen1)
 	screen9.resizable(False,False)
-	screen9.title("InstaBot-Unfollow Users")
+	screen9.title("InstaPy-Unfollow Users")
 	try:
 		screen9.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen9.geometry(f"{w}x{h}+0+0")
+	screen9.configure(bg="#1b3b5f")
 
-	framex=Frame(screen9,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
-
-	reg=ImageTk.PhotoImage(file="images/upload.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen9,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen9,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen9,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+	
+	Label(screen9,text="Unfollow",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-550,y=70)
+	Label(screen9,text="multiple users",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-540,y=150)
 
 	global frametxt
-	frametxt=Frame(framex,bg="white",highlightthickness=3)
-	frametxt.config(highlightbackground="gray")
-	frametxt.place(x=660,y=80,width=550,height=550)
+	
+	frametxt = Frame(screen9,bg="#455566")
+	frametxt.place(x=w-750,y=240,width=600,height=500)
 
-	Label(frametxt,text="Unfollow Users",font=("times new roman",35,"bold"),bg="white",fg="black").place(x=100,y=20)
+	Label(frametxt,text="Open text file containing Username list",font=("calibri",24),bg="#455566",fg="#FFFFFF").pack(pady=10)
 
-	Label(frametxt,text="Open text file containing Username list",font=("times new roman",15),fg="black",bg="white").place(x=100,y=120)
+	btn = ImageTk.PhotoImage(file="images/openbtn.png")
+	Button(frametxt,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=open_file).pack()
+	
+	Label(frametxt,text="- - - - - OR - - - - -",font=("calibri",28),bg="#455566",fg="#FFFFFF").pack()
 
-	btn = Button(frametxt,text="Open File",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=open_file)
-	btn.place(x=200,y=150,width=125,height=40)
-
-	Label(frametxt,text="- - - - OR - - - -",font=("times new roman",25,"bold"),fg="black",bg="white").place(x=160,y=200)
-
-	Label(frametxt,text="Write Usernames seprated by line",font=("times new roman",15),fg="black",bg="white").place(x=100,y=250)
+	Label(frametxt,text="Write Usernames seprated by line",font=("calibri",24),bg="#455566",fg="#FFFFFF").pack()
 
 	global text_box
 
 	scroll = Scrollbar(frametxt,orient=VERTICAL)
 
-	text_box = Text(frametxt,bg="lightblue",yscrollcommand=scroll.set)
+	text_box = Text(frametxt,bg="#556080",font=("calibri",14),fg="#FFFFFF",highlightthickness=0,borderwidth=0,yscrollcommand=scroll.set)
 	scroll.config(command=text_box.yview)
-	text_box.place(x=100,y=290,width=300,height=160)
-	scroll.place(x=395,y=290,width=20,height=160)
+	text_box.place(x=150,y=240,width=300,height=160)
+	scroll.place(x=445,y=240,width=20,height=160)
 
-	Button(frametxt,text="Unfollow",font=("calibri",16,"bold"),bg="SlateBlue2",cursor="hand2",command=verify_unfollow).place(x=200,y=470,width=125,height=40)
+	btn2 = ImageTk.PhotoImage(file="images/unfollowbtn.png")
+	Button(frametxt,image=btn2,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_unfollow).place(x=150,y=420)
 
+	screen9.state('zoomed')
 	screen9.mainloop()
 
 def open_file():
@@ -557,69 +593,58 @@ def verify_unfollow():
 		unfollow_usr(lst)
 
 def unfollow_usr(lst):
-	driver.set_window_size(800,950)
+	driver.set_window_size(800,820)
 	follow.unfollowacc(driver,lst)
 	driver.minimize_window()
 	messagebox.showinfo("Success","You did't follow them now",parent=screen9)
 
 
+#--------------------------------------------about me---------------------------------------
 def contactme():
 	global screen10
 	screen10=Toplevel(screen1)
 	screen10.resizable(False,False)
-	screen10.title("InstaBot-Contact Me")
+	screen10.title("InstaPy-Contact Me")
 	try:
 		screen10.iconbitmap(r"images/icon.ico")
 	except:
 		pass
 	screen10.geometry(f"{w}x{h}+0+0")
+	screen10.configure(bg="#1b3b5f")
 
-	framex=Frame(screen10,bg="white",highlightthickness=3)
-	framex.config(highlightbackground="gray")
-	framex.place(x=(w-1350)/2,y=(h-700)//2-15,width=1350,height=700)
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen10,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen10,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen10,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
 
-	reg=ImageTk.PhotoImage(file="images/About_us_page.jpg")
-	Label(framex,image=reg).place(relwidth=1,relheight=1)
-	frame1=Frame(framex,bg="white",highlightthickness=3)
-	frame1.config(highlightbackground="gray")
-	frame1.place(x=510,y=60,width=741,height=580)
+	frame = Frame(screen10,bg="#455566")
+	frame.place(x=w-850,y=150,width=700,height=600)
 
+	me=ImageTk.PhotoImage(file="images/abhishek.png")
+	Label(frame,image=me,bg="#455566").place(x=20,y=20)
+
+	Label(frame,text="Abhishek Dhakad",font=("calibri",34),fg=fgfont,bg="#455566").place(x=270,y=50)
+	Label(frame,text="●  I'm a second-year student pursuing\n    Btech-CSE.",font=("Poppin",18),fg=fgfont,bg="#455566",justify="left").place(x=225,y=150)
+	Label(frame,text="●  I'm a self-learner and highly passionate\n    to learn new Skills and Technologies.",font=("Poppin",18),fg=fgfont,bg="#455566",justify="left").place(x=225,y=225)
+	Label(frame,text="Skills",font=("calibri",28),fg=fgfont,bg="#455566").place(x=270,y=310)
+	Label(frame,text="●  Python Developer",font=("Poppin",18),fg=fgfont,bg="#455566").place(x=225,y=380)
+	Label(frame,text="●  Web Developer",font=("Poppin",18),fg=fgfont,bg="#455566").place(x=225,y=420)
+	Label(frame,text="●  Competitive Programmer",font=("Poppins",18),fg=fgfont,bg="#455566",justify="left").place(x=225,y=460)
 	
-
-	
-
-	k=ImageTk.PhotoImage(file="images/abhishek.jpg")
-	Label(frame1,image=k).place(x=270,y=10,width=197,height=197)
-	Label(frame1,text="Abhishek",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=210,y=220)
-	Label(frame1,text="Dhakad",font=("times new roman",30,"bold","italic","underline"),fg="black",bg="white").place(x=380,y=220)
-
-	Label(frame1,text="I'm a second-year student \n pursuing Btech-CSE @LPU Punjab.",font=("Poppin",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=290)
-	Label(frame1,text="I'm a self-learner and highly passionate\nto learn new Skills and Technologies.",font=("Poppin",16,"italic"),fg="black",bg="white",justify="left").place(x=310,y=360)
-
-	Label(frame1,text="> Python Developer",font=("Poppin",16,"bold"),fg="black",bg="white").place(x=10,y=290)
-	Label(frame1,text="> Web Developer",font=("Poppin",16,"bold"),fg="black",bg="white").place(x=10,y=340)
-	Label(frame1,text="> Competitive Programmer",font=("Poppins",16,"bold"),fg="black",bg="white",justify="left").place(x=10,y=390)
-
-	Label(frame1,text="Connect to me on",font=("Santation",20,"bold"),fg="black",bg="white",justify="left").place(x=240,y=450)
-	
-	instalogo=ImageTk.PhotoImage(file="images/instagram.png")
-	maillogo=ImageTk.PhotoImage(file="images/mail.png")
-	linkedinlogo=ImageTk.PhotoImage(file="images/linkedin.png")
 	githublogo=ImageTk.PhotoImage(file="images/github.png")
+	instalogo=ImageTk.PhotoImage(file="images/instagram.png")
+	linkedinlogo=ImageTk.PhotoImage(file="images/linkedin.png")
 
-	Button(frame1,image=instalogo,cursor="hand2",command=insta,bd=0).place(x=200,y=500,width=40,height=40)
-	Button(frame1,image=maillogo,cursor="hand2",command=mail,bd=0).place(x=290,y=500,width=40,height=40)
-	Button(frame1,image=linkedinlogo,cursor="hand2",command=linkedin,bd=0).place(x=380,y=500,width=40,height=40)
-	Button(frame1,image=githublogo,cursor="hand2",command=github,bd=0).place(x=470,y=500,width=40,height=40)
+	Button(frame,image=githublogo,cursor="hand2",bg="#455566",command=github,activebackground="#455566",activeforeground="#FFFFFF",bd=0).place(x=20,y=530,width=40,height=40)
+	Button(frame,image=linkedinlogo,cursor="hand2",bg="#455566",command=linkedin,activebackground="#455566",activeforeground="#FFFFFF",bd=0).place(x=100,y=530,width=40,height=40)
+	Button(frame,image=instalogo,cursor="hand2",bg="#455566",command=insta,activebackground="#455566",activeforeground="#FFFFFF",bd=0).place(x=180,y=530,width=40,height=40)
 
+	screen10.state('zoomed')
 	screen10.mainloop()
 
 def insta():
 	url="https://www.instagram.com/abhishek.dhakad_/"
-	webbrowser.open(url)
-
-def mail():
-	url="mailto:abhishek.dhakad121@gmail.com"
 	webbrowser.open(url)
 
 def linkedin():
@@ -630,6 +655,79 @@ def github():
 	url = "https://github.com/AbhishekDhakad18"
 	webbrowser.open(url)
 
+#---------------------------------------about instapy page-------------------------
+def about_instapy():
+	screen11=Toplevel(screen1)
+	screen11.resizable(False,False)
+	screen11.title("InstaPy-About InstaPy")
+	try:
+		screen11.iconbitmap(r"images/icon.ico")
+	except:
+		pass
+	screen11.geometry(f"{w}x{h}+0+0")
+	screen11.configure(bg="#1b3b5f")
+
+	robot = ImageTk.PhotoImage(file="images/robot.png")
+	Label(screen11,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
+	Label(screen11,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
+	Label(screen11,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+
+	frame = Frame(screen11,bg="#455566")
+	frame.place(x=w-850,y=150,width=700,height=600)
+
+	Label(frame,text="InstaPy",font=("calibri",36),fg=fgfont,bg="#455566").place(x=20,y=10)
+	Label(frame,text="An Instagram Bot",font=("calibri",28),fg=fgfont,bg="#455566").place(x=190,y=75)
+	Label(frame,text="●  Instapy is an automation bot of instagram.",font=("Poppin",18),fg=fgfont,bg="#455566",justify="left").place(x=150,y=135)
+	Label(frame,text="●  It has additional interesting and useful\n    features than instagram.",font=("Poppin",18),fg=fgfont,bg="#455566",justify="left").place(x=150,y=180)
+	Label(frame,text="●  If you have any suggetion or request to \n    add any more feature do ping me on\n    instagram (given in about me).",font=("Poppin",18),fg=fgfont,bg="#455566",justify="left").place(x=150,y=255)
+
+	Label(frame,text="Tech Used",font=("calibri",28),fg=fgfont,bg="#455566").place(x=190,y=360)
+	Label(frame,text="●  Programming language - Python",font=("Poppin",18),fg=fgfont,bg="#455566").place(x=150,y=430)
+	Label(frame,text="●  For GUI - Tkinter",font=("Poppin",18),fg=fgfont,bg="#455566").place(x=150,y=470)
+	Label(frame,text="●  For automation - Selenium",font=("Poppins",18),fg=fgfont,bg="#455566",justify="left").place(x=150,y=510)
+	Label(frame,text="●  For images design - Figma",font=("Poppins",18),fg=fgfont,bg="#455566",justify="left").place(x=150,y=550)
+
+	screen11.state('zoomed')
+	screen11.mainloop()
+
+#---------------------------------------nav funtions-------------------------- 
+def option_aboutme():
+	navRoot.grab_release()
+	contactme()
+
+def option_about_instapy():
+	navRoot.grab_release()
+	about_instapy()
+
+def option_logout():
+	navRoot.grab_release()
+	driver.quit()
+	screen1.destroy()
+	import home_page
+
+def Exit():
+	driver.quit()
+	print("Application Closed")
+	exit()
+
+#-----------------------------------------fuction for nav switch---------------
+def switch():
+	global btnstate
+	if btnstate is True:
+		for x in range(1,303,3):
+			navRoot.place(x=-x,y=0)
+			navRoot.update()
+
+		navRoot.grab_release()
+		btnstate = False
+	else:
+		for x in range(-300,0,3):
+			navRoot.place(x=x,y=0)
+			navRoot.update()
+		navRoot.grab_set()
+		btnstate = True
+
 
 def bot(browser,var1):
 	global driver,username
@@ -638,7 +736,7 @@ def bot(browser,var1):
 	global screen1
 	screen1=Tk()
 	screen1.resizable(False,False)
-	screen1.title("InstaBot: Main Page")
+	screen1.title("InstaPy: Main Page")
 	try:
 		screen1.iconbitmap(r"images/icon.ico")
 	except:
@@ -650,17 +748,49 @@ def bot(browser,var1):
 	screen1.geometry(f"{w}x{h}+0+0")
 	screen1.configure(bg="#1b3b5f")
 
-	robot = ImageTk.PhotoImage(file="C:/Users/hp/Desktop/temporary/robot.png")
+	#robot and copyright
+	robot = ImageTk.PhotoImage(file="images/robot.png")
 	Label(screen1,image=robot,bg="#1b3b5f").place(x=80,y=(h-550)/2)
-	copy = ImageTk.PhotoImage(file="C:/Users/hp/Desktop/temporary/copyright.png")
+	copy = ImageTk.PhotoImage(file="images/copyright.png")
 	Label(screen1,image=copy,bg="#1b3b5f").place(x=235,y=686,width=16,height=16)
 	Label(screen1,text="2021 Abhishek Dhakad",font=("@Yu Gothic UI",12),bg="#1b3b5f",fg="#FFFFFF").place(x=255,y=680)
+
+	#menu button
+	# Frame(screen1,bg="#455566").place(x=0,y=50,width=70,height=1000)
+	# Frame(screen1,bg="#6cffff").place(x=0,y=0,width=70,height=50)
+	open_menu = ImageTk.PhotoImage(file="images/menu.png")
+	Button(screen1,image=open_menu,bg="#1b3b5f",cursor="hand2",activebackground="#1b3b5f",highlightthickness=0,borderwidth=0,command=switch).place(x=15,y=3,width=45,height=45)
+
+
+	#---------------------------------navwindow----------------
+	global btnstate
+	btnstate = FALSE
+
+	global navRoot
+	navRoot = tk.Frame(screen1, bg="#455566", height=1000, width=300)
+	navRoot.place(x=-300, y=0)
+	Frame(navRoot,bg="#6cffff",width=300,height=50).place(x=0, y=0)
+	Label(navRoot,text="IntstaPy",font="Bahnschrift 18",bg="#6cffff",fg="black").place(x=30,y=10)
+
+	close_menu = ImageTk.PhotoImage(file="images/menu.png")
+	Button(navRoot,image=close_menu,bg="#6cffff",cursor="hand2",activebackground="#6cffff",highlightthickness=0,borderwidth=0,command=switch).place(x=250,y=3,height=45,width=45)
 	
-	
-	
+	#font for all option page background
+	global fgfont
+	fgfont = "#FFFFFF"
+
+	#navbar buttons
+	y = 90
+	options = ["About Me", "About Instapy", "Logout", "Exit"]
+	func = [option_aboutme, option_about_instapy, option_logout, Exit]
+	for i in range(4):
+		tk.Button(navRoot, text=options[i], font="BahnschriftLight 20", bg="#455566", fg="white", activebackground="#455566", activeforeground="#1b3b5f", bd=0,command=func[i]).place(x=25, y=y)
+		y += 50
+
+
+	#------------------------mainscreen--------------------
 	Label(screen1,text="Hey, Instapy user \U0001F590",font=("@Yu Gothic UI",40),bg="#1b3b5f",fg="#FFFFFF").place(x=w-690,y=60)
 	Label(screen1,text="Click the buttons",font=("Helvetica",22),bg="#1b3b5f",fg="#EDEDED").place(x=w-570,y=140)
-	
 	
 	frame = Frame(screen1,bg="#455566")
 	frame.place(x=w-750,y=240,width=600,height=500)
@@ -679,9 +809,10 @@ def bot(browser,var1):
 	
 	Button(frame,text="Unfollowers",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=getlist).place(x=100,y=390,width=180,height=50)
 	Button(frame,text="Unfollow",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=unfollow).place(x=320,y=390,width=170,height=50)
-	
-	Button(screen1,text="About Me",font=("calibri",25),bg="#c7cacf",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=contactme).place(x=242,y=710,width=170,height=50)
-	
+		
 	screen1.state('zoomed')
 	screen1.mainloop()
 
+
+if __name__ == "__main__":
+    print("----------------------PLEASE RUN home_page.py--------")

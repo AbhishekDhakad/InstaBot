@@ -44,3 +44,6 @@ def chk_login(driver,username,password):
 		print("Login failed")
 		driver.quit()
 		return 0
+
+if __name__ == "__main__":
+    print("Please run home_page.py")

@@ -40,3 +40,7 @@ def takeinfo(driver,usr):
 	except Exception as es:
 		print(es)
 		return 0
+
+
+if __name__ == "__main__":
+    print("Please run home_page.py")

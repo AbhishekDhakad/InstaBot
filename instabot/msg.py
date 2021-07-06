@@ -6,7 +6,6 @@ def sendmsg(driver,victim,message):
    sleep(2)
    try:
       driver.find_element_by_xpath('//h2[text()="Sorry, this page isn\'t available."]')
-      driver.minimize_window()
       return 0
    except:
       try:
@@ -34,7 +33,6 @@ def sendmsg(driver,victim,message):
       sleep(1)
       driver.find_element_by_xpath('//button[text()="Send"]').click()
       print("_______Message sent Successfully______")
-      driver.minimize_window()
       return 1
 
 
@@ -70,3 +68,6 @@ def blast(driver,victim,message,x):
          print("_______Message sent Successfully______")
          driver.minimize_window()
          return 1
+
+if __name__ == "__main__":
+    print("Please run home_page.py")

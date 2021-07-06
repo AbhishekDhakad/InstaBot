@@ -56,3 +56,5 @@ def dpdownload(driver,usr):
 		return 0
 		
 	
+if __name__ == "__main__":
+    print("Please run home_page.py")

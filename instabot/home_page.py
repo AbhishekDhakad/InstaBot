@@ -22,6 +22,7 @@ except:
 	sleep(5)
 	quit()
 
+
 def webd():
 	try:
 		browser=webdriver.Chrome()
@@ -97,7 +98,7 @@ def login_page():
 	Label(frame,image=pwd1,bg="#07254b").place(x=120,y=290,height=40,width=40)
 
 
-	btn = ImageTk.PhotoImage(file="images/btnbtn.png")
+	btn = ImageTk.PhotoImage(file="images/loginbtn.png")
 	Button(frame,image=btn,bg="#455566",cursor="hand2",activebackground="#455566",highlightthickness=0,borderwidth=0,command=verify_login).place(x=150,y=390,width=300,height=65)
 
 	root.state('zoomed')
