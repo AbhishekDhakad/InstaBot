@@ -65,7 +65,7 @@ About me
   python home_page.py
 ```
 ## ✅ Requirements
-Before running it check the version of your chrome and chromedriver.exe(provided in my repo)  to check the version of chromedriver, double click on it\
+Before running it check the version of your chrome and chromedriver.exe(provided in my repo),  to check the version of chromedriver, double click on it.
 - If they are the same you are good to go.
 - Else download the same version of chromedriver.exe file from [here](https://chromedriver.chromium.org/downloads) and replace this with an older chromedriver file.
 
