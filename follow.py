@@ -54,7 +54,10 @@ def info(driver,account,page):
     list_h=[]
     print("Getting data... please wait...")
     for i in range(1,count+1):
-        src=driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]/ul/div/li[%s]'% i)
+        try:
+            src=driver.find_element_by_xpath('/html/body/div[5]/div/div/div[3]/ul/div/li[%s]'% i)
+        except:
+            src=driver.find_element_by_xpath('/html/body/div[5]/div/div/div[2]/ul/div/li[%s]'% i)
         driver.execute_script("arguments[0].scrollIntoView();", src)
         if page=="following":
             if(i%7==0):
