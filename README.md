@@ -1,6 +1,11 @@
 <h1 align="center">InstaPy</h1>
 <h5 align="center">Instapy is an Instagram automated bot that has additional interesting and useful features.</h5><br/>
 
+## ▶️ Tutorial
+
+
+https://user-images.githubusercontent.com/70605450/126147887-48eff563-a86c-493f-bf3b-ed117c1c4513.mp4
+
 
 ## 🎯 About
 I have started this project to learn how to structure a good-looking GUI in python and also to learn how to automate websites to do repetitive stuff on their own.\
@@ -9,10 +14,12 @@ It has the feature of sending messages, view followers, followings & unfollowers
 For now, this project is only working in Windows, I'll try to make it work in Linux as well, as soon as possible.\
 Go try it and please let me know if you enjoyed it with a ⭐️, I would appreciate it a lot.
 
-## ▶️ Demo
 
-Here you can find the demo link:
-![Screenshot of InstaPy Log In](https://scontent-hel3-1.cdninstagram.com/v/t50.2886-16/217347438_1160717001090557_8075047857917924211_n.mp4?_nc_ht=scontent-hel3-1.cdninstagram.com&_nc_cat=105&_nc_ohc=j_xw1csRcI8AX9HWQU3&edm=AJBgZrYBAAAA&ccb=7-4&oe=60F7F056&oh=91455b7c6bf26540de4b1367f16a7cd3&_nc_sid=78c662&dl=1)
+
+
+
+
+
 
 
 ## ✨ Features
