@@ -9,6 +9,10 @@ It has the feature of sending messages, view followers, followings & unfollowers
 For now, this project is only working in Windows, I'll try to make it work in Linux as well, as soon as possible.\
 Go try it and please let me know if you enjoyed it with a ⭐️, I would appreciate it a lot.
 
+## ▶️ Demo
+
+Here you can find the demo link:
+
 ## ✨ Features
 ✔️ Dp - Download profile pictures of multiple users.\
 ✔️ Bio - Save bio in a text file of multiple users.\
