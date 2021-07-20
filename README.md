@@ -4,7 +4,7 @@
 ## ▶️ Tutorial
 
 
-https://user-images.githubusercontent.com/70605450/126147887-48eff563-a86c-493f-bf3b-ed117c1c4513.mp4
+https://user-images.githubusercontent.com/70605450/126291094-978b434e-5cd4-4438-972b-004eec07ca87.mp4
 
 
 ## 🎯 About
