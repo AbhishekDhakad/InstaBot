@@ -652,7 +652,7 @@ def linkedin():
 	webbrowser.open(url)
 
 def github():
-	url = "https://github.com/AbhishekDhakad18"
+	url = "https://github.com/AbhishekDhakad"
 	webbrowser.open(url)
 
 #---------------------------------------about instapy page-------------------------
